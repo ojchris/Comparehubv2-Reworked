@@ -1,0 +1,33 @@
+uuid: c28c6540-5dd5-4aca-88f1-7b105583c34a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_scheduled_date
+    - node.type.event
+  module:
+    - smart_date
+    - smart_date_recur
+third_party_settings:
+  smart_date_recur:
+    allow_recurring: true
+    month_limit: 12
+id: node.event.field_scheduled_date
+field_name: field_scheduled_date
+entity_type: node
+bundle: event
+label: 'Scheduled Date'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    default_duration: 60
+    default_duration_increments: "30\r\n60|1 hour\r\n90\r\n120|2 hours\r\ncustom"
+    default_date_type: now
+    default_date: ''
+    min: ''
+    max: ''
+default_value_callback: ''
+settings: {  }
+field_type: smartdate

@@ -1,0 +1,24 @@
+uuid: 06937d19-6fda-42f3-8b10-92b5ddb21d94
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_three_column_with_headline
+    - filter.format.full_html
+    - node.type.page
+  module:
+    - text
+id: node.page.field_three_column_with_headline
+field_name: field_three_column_with_headline
+entity_type: node
+bundle: page
+label: 'Three Column with Headline'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - full_html
+field_type: text_long

@@ -1,0 +1,24 @@
+uuid: 0056ab5a-6534-4670-a5ec-c0b118e1ce32
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_partners_two_column
+    - filter.format.full_html
+    - node.type.page
+  module:
+    - text
+id: node.page.field_partners_two_column
+field_name: field_partners_two_column
+entity_type: node
+bundle: page
+label: 'Partners Two Column'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - full_html
+field_type: text_long

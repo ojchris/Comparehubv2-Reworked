@@ -1,0 +1,9 @@
+uuid: 5644f900-206d-472e-b991-df3dd2ef1005
+langcode: en
+status: true
+dependencies: {  }
+name: 'Business Location'
+vid: business_location
+description: null
+weight: 0
+new_revision: false

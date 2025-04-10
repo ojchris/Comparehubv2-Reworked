@@ -1,0 +1,68 @@
+uuid: a01fa056-2331-400e-9360-8bbc7042bf39
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.food_v2
+    - field.field.commerce_product_variation.food_v2.attribute_portion
+    - field.field.commerce_product_variation.food_v2.attribute_protein
+    - field.field.commerce_product_variation.food_v2.field_image
+    - image.style.thumbnail
+  module:
+    - commerce_price
+    - image
+id: commerce_product_variation.food_v2.default
+targetEntityType: commerce_product_variation
+bundle: food_v2
+mode: default
+content:
+  attribute_portion:
+    type: options_select
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  attribute_protein:
+    type: options_select
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_image:
+    type: image_image
+    weight: 1
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+  list_price:
+    type: commerce_list_price
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  price:
+    type: commerce_price_default
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  sku:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 6
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+hidden:
+  created: true
+  uid: true

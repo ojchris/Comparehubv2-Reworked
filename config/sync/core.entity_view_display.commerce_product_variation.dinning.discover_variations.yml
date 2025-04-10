@@ -1,0 +1,50 @@
+uuid: 58925e32-9f6e-4d39-a26f-0de5735934ee
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.dinning
+    - core.entity_view_mode.commerce_product_variation.discover_variations
+    - field.field.commerce_product_variation.dinning.field_image
+  module:
+    - commerce_price
+    - image
+id: commerce_product_variation.dinning.discover_variations
+targetEntityType: commerce_product_variation
+bundle: dinning
+mode: discover_variations
+content:
+  field_image:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  list_price:
+    type: commerce_price_default
+    label: above
+    settings:
+      strip_trailing_zeroes: false
+      currency_display: symbol
+    third_party_settings: {  }
+    weight: -1
+    region: content
+  price:
+    type: commerce_price_default
+    label: above
+    settings:
+      strip_trailing_zeroes: false
+      currency_display: symbol
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  commerce_variation_cart_form: true
+  product_id: true
+  sku: true
+  title: true

@@ -1,0 +1,29 @@
+uuid: 81a78def-201b-4397-8c12-de39f692c5fb
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.drink
+    - field.storage.commerce_product.field_product_brand
+    - node.type.brand
+id: commerce_product.drink.field_product_brand
+field_name: field_product_brand
+entity_type: commerce_product
+bundle: drink
+label: 'Product Brand'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      brand: brand
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

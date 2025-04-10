@@ -1,0 +1,51 @@
+uuid: 4c3b42ab-7d4e-4505-9bea-12deda9fd3fb
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.drink
+    - field.field.commerce_product_variation.drink.attribute_size
+    - field.field.commerce_product_variation.drink.field_image
+  module:
+    - commerce_price
+    - image
+id: commerce_product_variation.drink.default
+targetEntityType: commerce_product_variation
+bundle: drink
+mode: default
+content:
+  field_image:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  list_price:
+    type: commerce_price_default
+    label: above
+    settings:
+      strip_trailing_zeroes: false
+      currency_display: symbol
+    third_party_settings: {  }
+    weight: -1
+    region: content
+  price:
+    type: commerce_price_default
+    label: above
+    settings:
+      strip_trailing_zeroes: false
+      currency_display: symbol
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  attribute_size: true
+  commerce_variation_cart_form: true
+  product_id: true
+  sku: true
+  title: true

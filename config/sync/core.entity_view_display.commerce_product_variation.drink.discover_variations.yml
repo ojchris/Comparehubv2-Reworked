@@ -1,0 +1,52 @@
+uuid: 7a10acae-766e-4dc0-8dba-88ff36751c39
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.drink
+    - core.entity_view_mode.commerce_product_variation.discover_variations
+    - field.field.commerce_product_variation.drink.attribute_size
+    - field.field.commerce_product_variation.drink.field_image
+  module:
+    - commerce_price
+    - image
+id: commerce_product_variation.drink.discover_variations
+targetEntityType: commerce_product_variation
+bundle: drink
+mode: discover_variations
+content:
+  field_image:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  list_price:
+    type: commerce_price_default
+    label: above
+    settings:
+      strip_trailing_zeroes: false
+      currency_display: symbol
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  price:
+    type: commerce_price_default
+    label: above
+    settings:
+      strip_trailing_zeroes: false
+      currency_display: symbol
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  attribute_size: true
+  commerce_variation_cart_form: true
+  product_id: true
+  sku: true
+  title: true

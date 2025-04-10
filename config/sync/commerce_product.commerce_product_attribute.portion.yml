@@ -1,0 +1,7 @@
+uuid: 57130af2-d72c-42a1-97f2-5972ac170305
+langcode: en
+status: true
+dependencies: {  }
+id: portion
+label: Portion
+elementType: select

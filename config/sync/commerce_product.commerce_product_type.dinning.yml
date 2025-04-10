@@ -1,0 +1,13 @@
+uuid: 30a2f65e-6e9d-48a9-8392-842a469eee0c
+langcode: en
+status: true
+dependencies: {  }
+id: dinning
+label: Dinning
+traits: {  }
+locked: false
+description: ''
+variationTypes:
+  - dinning
+multipleVariations: true
+injectVariationFields: true

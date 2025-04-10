@@ -1,0 +1,23 @@
+uuid: 9f24f5a1-a6b0-49da-a3de-0c8c8f15ef89
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_top_brand
+    - node.type.brand
+id: node.brand.field_top_brand
+field_name: field_top_brand
+entity_type: node
+bundle: brand
+label: 'Top Brand?'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Yes'
+  off_label: 'No'
+field_type: boolean

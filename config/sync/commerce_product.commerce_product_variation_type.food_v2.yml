@@ -1,0 +1,10 @@
+uuid: c53fc59a-89ed-424c-a31a-5556af20cb3e
+langcode: en
+status: true
+dependencies: {  }
+id: food_v2
+label: Food
+traits: {  }
+locked: false
+orderItemType: default
+generateTitle: true

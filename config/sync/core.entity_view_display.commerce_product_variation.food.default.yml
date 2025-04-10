@@ -1,0 +1,57 @@
+uuid: e094df9d-e61a-4c12-a47a-47f8d625e140
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.food
+    - field.field.commerce_product_variation.food.attribute_portion
+    - field.field.commerce_product_variation.food.attribute_protein
+    - field.field.commerce_product_variation.food.field_image
+  module:
+    - commerce_price
+    - commerce_variation_cart_form
+    - image
+third_party_settings:
+  commerce_variation_cart_form:
+    combine: false
+id: commerce_product_variation.food.default
+targetEntityType: commerce_product_variation
+bundle: food
+mode: default
+content:
+  field_image:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  list_price:
+    type: commerce_price_default
+    label: above
+    settings:
+      strip_trailing_zeroes: false
+      currency_display: symbol
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  price:
+    type: commerce_price_default
+    label: above
+    settings:
+      strip_trailing_zeroes: false
+      currency_display: symbol
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  attribute_portion: true
+  attribute_protein: true
+  commerce_variation_cart_form: true
+  product_id: true
+  sku: true
+  title: true

@@ -1,0 +1,19 @@
+uuid: 0c54f6c3-640a-4d83-a266-af5514024f5b
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_partners_two_column
+field_name: field_partners_two_column
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

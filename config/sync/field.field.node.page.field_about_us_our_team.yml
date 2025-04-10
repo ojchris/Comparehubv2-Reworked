@@ -1,0 +1,24 @@
+uuid: 71c76999-2605-4b11-aefe-0475e212cea8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_about_us_our_team
+    - filter.format.full_html
+    - node.type.page
+  module:
+    - text
+id: node.page.field_about_us_our_team
+field_name: field_about_us_our_team
+entity_type: node
+bundle: page
+label: 'About Us Our Team'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - full_html
+field_type: text_long

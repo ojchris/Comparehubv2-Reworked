@@ -1,0 +1,24 @@
+uuid: 25fbe349-50f5-47b1-8e70-a9df5838eb0f
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.drink
+    - field.storage.commerce_product.field_description
+    - filter.format.basic_html
+  module:
+    - text
+id: commerce_product.drink.field_description
+field_name: field_description
+entity_type: commerce_product
+bundle: drink
+label: Description
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic_html
+field_type: text_long

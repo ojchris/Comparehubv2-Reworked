@@ -1,0 +1,19 @@
+uuid: 4fca9122-78a6-43c0-8750-59646ae9b6b5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_details
+    - paragraphs.paragraphs_type.brand_event
+id: paragraph.brand_event.field_details
+field_name: field_details
+entity_type: paragraph
+bundle: brand_event
+label: Details
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

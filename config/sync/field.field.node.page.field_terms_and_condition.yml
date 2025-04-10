@@ -1,0 +1,24 @@
+uuid: 6e6f1cd8-d566-4c18-b101-84f7cacebb9c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_terms_and_condition
+    - filter.format.full_html
+    - node.type.page
+  module:
+    - text
+id: node.page.field_terms_and_condition
+field_name: field_terms_and_condition
+entity_type: node
+bundle: page
+label: 'Terms and Condition'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - full_html
+field_type: text_long

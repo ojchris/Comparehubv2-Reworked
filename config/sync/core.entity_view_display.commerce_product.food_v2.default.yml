@@ -1,0 +1,42 @@
+uuid: 35e801a8-69d0-4e80-b954-a3e00cba81fd
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.food_v2
+    - field.field.commerce_product.food_v2.body
+  module:
+    - commerce_product
+    - text
+id: commerce_product.food_v2.default
+targetEntityType: commerce_product
+bundle: food_v2
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -5
+    region: content
+  variations:
+    type: commerce_add_to_cart
+    label: above
+    settings:
+      combine: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+hidden:
+  created: true
+  stores: true
+  uid: true

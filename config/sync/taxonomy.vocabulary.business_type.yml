@@ -1,0 +1,9 @@
+uuid: 13e2ef41-0cd4-4ee3-b252-6a2073041d74
+langcode: en
+status: true
+dependencies: {  }
+name: 'Business Type'
+vid: business_type
+description: null
+weight: 0
+new_revision: false

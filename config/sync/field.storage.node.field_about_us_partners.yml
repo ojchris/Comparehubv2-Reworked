@@ -1,0 +1,19 @@
+uuid: b58c9653-e925-4bec-a879-1457f22e5e14
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - text
+id: node.field_about_us_partners
+field_name: field_about_us_partners
+entity_type: node
+type: text_long
+settings: {  }
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

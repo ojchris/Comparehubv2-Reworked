@@ -1,0 +1,13 @@
+uuid: 9d4a239c-cd85-41cb-9435-092522cd0669
+langcode: en
+status: true
+dependencies: {  }
+id: food_v2
+label: Food
+traits: {  }
+locked: false
+description: ''
+variationTypes:
+  - food_v2
+multipleVariations: true
+injectVariationFields: true

@@ -1,0 +1,10 @@
+uuid: bed0edfc-0858-4127-a750-869800bc5954
+langcode: en
+status: true
+dependencies: {  }
+id: dinning
+label: Dinning
+traits: {  }
+locked: false
+orderItemType: default
+generateTitle: true

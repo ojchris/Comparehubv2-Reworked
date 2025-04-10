@@ -1,0 +1,11 @@
+uuid: c6162e2e-5880-4998-9122-23ab214ee1e9
+langcode: en
+status: true
+dependencies:
+  module:
+    - commerce_product
+id: commerce_product_variation.discover_variations
+label: 'Discover Variations'
+description: 'Variations included in Discover page Products listings'
+targetEntityType: commerce_product_variation
+cache: true

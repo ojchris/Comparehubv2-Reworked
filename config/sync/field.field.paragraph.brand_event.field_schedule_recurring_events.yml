@@ -1,0 +1,33 @@
+uuid: 2fd075d0-c104-42be-9298-397045cad29f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_schedule_recurring_events
+    - paragraphs.paragraphs_type.brand_event
+  module:
+    - smart_date
+    - smart_date_recur
+third_party_settings:
+  smart_date_recur:
+    allow_recurring: false
+    month_limit: 12
+id: paragraph.brand_event.field_schedule_recurring_events
+field_name: field_schedule_recurring_events
+entity_type: paragraph
+bundle: brand_event
+label: 'Schedule (recurring events)'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    default_duration: 60
+    default_duration_increments: "30\r\n60|1 hour\r\n90\r\n120|2 hours\r\ncustom"
+    default_date_type: now
+    default_date: ''
+    min: ''
+    max: ''
+default_value_callback: ''
+settings: {  }
+field_type: smartdate

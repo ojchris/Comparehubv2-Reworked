@@ -1,0 +1,7 @@
+uuid: 9c830b39-de5a-47a9-9668-97120137e68a
+langcode: en
+status: true
+dependencies: {  }
+id: protein
+label: Protein
+elementType: radios

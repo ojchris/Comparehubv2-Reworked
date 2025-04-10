@@ -1,0 +1,24 @@
+uuid: 728f1aab-8c6b-48f7-b787-24bbb79ba139
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_partners_sectors
+    - filter.format.full_html
+    - node.type.page
+  module:
+    - text
+id: node.page.field_partners_sectors
+field_name: field_partners_sectors
+entity_type: node
+bundle: page
+label: 'Partners Sectors'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - full_html
+field_type: text_long

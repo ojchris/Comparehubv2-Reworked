@@ -1,0 +1,19 @@
+uuid: 685ec5c1-b2df-4805-9c62-6f6bb839eff0
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - smart_date
+id: paragraph.field_schedule_recurring_events
+field_name: field_schedule_recurring_events
+entity_type: paragraph
+type: smartdate
+settings: {  }
+module: smart_date
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

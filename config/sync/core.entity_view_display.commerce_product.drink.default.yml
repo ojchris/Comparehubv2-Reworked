@@ -1,0 +1,73 @@
+uuid: a993b490-1b66-4a56-b9e0-67f5c6b70aae
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.drink
+    - field.field.commerce_product.drink.field_description
+    - field.field.commerce_product.drink.field_image
+    - field.field.commerce_product.drink.field_product_brand
+    - field.field.commerce_product.drink.field_product_category
+  module:
+    - commerce_product
+    - image
+    - text
+id: commerce_product.drink.default
+targetEntityType: commerce_product
+bundle: drink
+mode: default
+content:
+  field_description:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 12
+    region: content
+  field_image:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 15
+    region: content
+  field_product_brand:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 13
+    region: content
+  field_product_category:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 14
+    region: content
+  title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: -5
+    region: content
+  variations:
+    type: commerce_add_to_cart
+    label: visually_hidden
+    settings:
+      combine: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+hidden:
+  created: true
+  stores: true
+  uid: true

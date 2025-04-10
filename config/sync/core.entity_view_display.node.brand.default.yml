@@ -1,0 +1,101 @@
+uuid: 90bd1e35-b347-473c-9c73-e386e94c84f9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.brand.field_address
+    - field.field.node.brand.field_brand_name
+    - field.field.node.brand.field_brand_type
+    - field.field.node.brand.field_location
+    - field.field.node.brand.field_logo
+    - field.field.node.brand.field_phone_number
+    - field.field.node.brand.field_top_brand
+    - field.field.node.brand.field_website
+    - node.type.brand
+  module:
+    - image
+    - link
+    - user
+id: node.brand.default
+targetEntityType: node
+bundle: brand
+mode: default
+content:
+  field_address:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_brand_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_brand_type:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_location:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_logo:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_phone_number:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_top_brand:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_website:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 108
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

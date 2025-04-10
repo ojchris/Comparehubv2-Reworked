@@ -1,0 +1,29 @@
+uuid: 173af1cf-2c1e-46ec-b304-50a504a2ccef
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_attribute.portion
+    - commerce_product.commerce_product_variation_type.food
+    - field.storage.commerce_product_variation.attribute_portion
+id: commerce_product_variation.food.attribute_portion
+field_name: attribute_portion
+entity_type: commerce_product_variation
+bundle: food
+label: Portion
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:commerce_product_attribute_value'
+  handler_settings:
+    target_bundles:
+      portion: portion
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

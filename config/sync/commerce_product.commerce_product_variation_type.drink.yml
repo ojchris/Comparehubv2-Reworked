@@ -1,0 +1,10 @@
+uuid: 28dd8103-d293-4f58-bcd3-25353a347b2f
+langcode: en
+status: true
+dependencies: {  }
+id: drink
+label: Drink
+traits: {  }
+locked: false
+orderItemType: default
+generateTitle: true

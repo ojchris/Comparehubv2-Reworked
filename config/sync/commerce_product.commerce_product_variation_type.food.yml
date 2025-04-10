@@ -1,0 +1,10 @@
+uuid: 3fbc45b5-4449-47fa-8fc6-0cba3c9c8e77
+langcode: en
+status: true
+dependencies: {  }
+id: food
+label: Food
+traits: {  }
+locked: false
+orderItemType: default
+generateTitle: true

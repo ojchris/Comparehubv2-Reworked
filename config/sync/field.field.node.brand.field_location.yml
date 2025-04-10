@@ -1,0 +1,29 @@
+uuid: 82ec60fa-5c7c-4f91-abff-28bd41a4e06b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_location
+    - node.type.brand
+    - taxonomy.vocabulary.business_location
+id: node.brand.field_location
+field_name: field_location
+entity_type: node
+bundle: brand
+label: Location
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      business_location: business_location
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

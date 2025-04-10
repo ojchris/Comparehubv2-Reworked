@@ -1,0 +1,78 @@
+uuid: c6181eef-f07d-4de5-9f7f-f0d4efc7baa2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.brand_event.field_banner
+    - field.field.paragraph.brand_event.field_date_one_off_events
+    - field.field.paragraph.brand_event.field_details
+    - field.field.paragraph.brand_event.field_event_title
+    - field.field.paragraph.brand_event.field_schedule_recurring_events
+    - paragraphs.paragraphs_type.brand_event
+  module:
+    - datetime
+    - image
+    - smart_date
+    - text
+id: paragraph.brand_event.default
+targetEntityType: paragraph
+bundle: brand_event
+mode: default
+content:
+  field_banner:
+    type: image
+    label: above
+    settings:
+      image_link: ''
+      image_style: ''
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_date_one_off_events:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_details:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_event_title:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_schedule_recurring_events:
+    type: smartdate_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+      format: default
+      force_chronological: false
+      add_classes: false
+      time_wrapper: true
+      localize: false
+      parts:
+        - start
+        - end
+      duration:
+        separator: ' | '
+        unit: ''
+        decimals: 2
+        suffix: h
+    third_party_settings: {  }
+    weight: 4
+    region: content
+hidden: {  }

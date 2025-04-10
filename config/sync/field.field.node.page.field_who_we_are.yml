@@ -1,0 +1,24 @@
+uuid: 4ae8c451-9f4f-436b-8cf1-182f153cd9df
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_who_we_are
+    - filter.format.full_html
+    - node.type.page
+  module:
+    - text
+id: node.page.field_who_we_are
+field_name: field_who_we_are
+entity_type: node
+bundle: page
+label: 'Who We Are'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - full_html
+field_type: text_long

@@ -1,0 +1,13 @@
+uuid: fbea54f3-cdf1-476a-936d-4a1983eb8520
+langcode: en
+status: true
+dependencies: {  }
+id: drink
+label: Drink
+traits: {  }
+locked: false
+description: ''
+variationTypes:
+  - drink
+multipleVariations: true
+injectVariationFields: true
