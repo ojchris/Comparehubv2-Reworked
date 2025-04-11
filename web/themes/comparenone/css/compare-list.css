@@ -1,0 +1,35 @@
+#comparison-table{
+    padding: 10px;
+}
+
+#comparison-table .responsive-enabled{
+    width: 100%;
+}
+
+
+#comparison-table .responsive-enabled tbody{ 
+    display: flex;
+    flex-direction: column-reverse;
+} 
+
+#comparison-table .responsive-enabled tbody tr {
+    display: flex;
+    /*justify-content: space-between;*/
+    text-align: left;
+}
+
+#comparison-table .responsive-enabled tbody tr td{ 
+    width: 20%;
+    padding: 20px 10px;   
+} 
+
+#comparison-table .responsive-enabled tbody tr td:first-of-type{ 
+    display: none;    
+} 
+
+#comparison-table .responsive-enabled tbody tr:nth-child(1) td{ 
+    
+    white-space: nowrap;
+    overflow: hidden;
+}
+    

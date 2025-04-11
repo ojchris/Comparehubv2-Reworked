@@ -1,0 +1,28 @@
+{#
+/**
+ * @file
+ * Theme override for a 'form' element.
+ *
+ * Available variables
+ * - attributes: A list of HTML attributes for the wrapper element.
+ * - children: The child elements of the form.
+ *
+ * @see template_preprocess_form()
+ */
+#}
+{%
+  set class = [
+    'page-form-group',
+  ]
+%}
+ 
+<form{{ attributes.addClass(classes) }}>
+  {{ children }}
+
+  <div class="page-form-footer">
+    <div class="page-form-footer-links">
+        <a href="login" class="page-form-footer-link">Already have an account?</a>
+        <a href="login" class="page-form-footer-link footer-link-primary">Log In</a>
+    </div>
+    </div>
+</form>

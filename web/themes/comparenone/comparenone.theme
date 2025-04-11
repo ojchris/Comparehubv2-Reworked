@@ -1,0 +1,308 @@
+<?php 
+declare(strict_types = 1);
+
+/**
+ * @file
+ * Functions to support theming in the comparenone theme.
+ */
+
+ /**
+ * Implements hook_form_alter().
+ */
+function comparenone_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  
+  // Change add-to-cart button text to 'Add to compare'
+  if ($form_state->getBuildInfo()['callback_object'] instanceof \Drupal\commerce_cart\Form\AddToCartFormInterface) {
+  $form[ 'actions' ][ 'submit' ][ '#value' ] = t( 'Add to Compare' );  
+  }
+
+  // Turn views exposed filter Textfield (product_brand) into a Select list
+  if ($form['#id'] == 'views-exposed-form-discover-search-form') {
+    
+        $nids = \Drupal::entityQuery('node')->accessCheck(TRUE)->condition('type','brand')->execute();
+        $nodes = \Drupal\node\Entity\Node::loadMultiple($nids);
+        $options = ['' => 'Select brand'];
+    
+        foreach($nodes as $nid => $node) {
+          $value = $node->get('field_brand_name')->getString();
+    
+          if (isset($value)) {
+            $options[$value] = $value;
+          }
+        }
+    
+        if (isset($form['field_brand_name_value'])) {
+          $form['field_brand_name_value']['#type'] = 'select';
+          $form['field_brand_name_value']['#options'] = $options;
+          $form['field_brand_name_value']['#size'] = 1;
+        }
+  }
+
+   if ( $form['#form_id'] == 'user_login_form' ) {
+    // Add css class to elements
+    $form['actions']['submit']['#attributes']['class'][] = 'page-form-button';
+    // Add placeholders.
+    $form['name']['#attributes']['placeholder'] = t('Username');
+    $form['pass']['#attributes']['placeholder'] = t('Password');
+
+    // Add a new attritube
+    $form['actions']['submit']['#attributes']['data-twig-form-submit'] = 'user-login-submit';
+  }
+
+}
+
+/**
+ * Implements hook_form_USER_REGISTER_FORM_alter().
+ */
+function comparenone_form_user_register_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $form['actions']['submit']['#value'] = t('Create account');
+
+  if ( $form['#form_id'] == 'user_register_form' ) {
+    // Add placeholders.
+    $form['account']['name']['#attributes']['placeholder'] = t('Username');
+    $form['account']['mail']['#attributes']['placeholder'] = t('Email');
+  }
+
+  // Add a new attritube
+    $form['actions']['submit']['#attributes']['data-twig-form-submit'] = 'register-form-submit';
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for html.html.twig.
+ */
+function comparenone_preprocess_html(array &$variables): void {
+
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page.html.twig.
+ */
+function comparenone_preprocess_page(array &$variables): void {
+    // Make 'title' variable available across all pages & nodes
+    if(isset($variables['node'])) {
+        $variables['title'] = $variables['node']->title->value;
+    }
+    else{
+        $variables['title'] = $variables['page']['#title'];
+    }
+
+    // Current user compare cart item count.
+    $cart_provider = \Drupal::getContainer()->get('commerce_cart.cart_provider');
+    $existing_carts = $cart_provider->getCarts();
+    $cart_item_count=0;
+    if (!empty($existing_carts)) {
+        foreach ($existing_carts as $existing_cart) {
+          assert($existing_cart instanceof \Drupal\commerce_order\Entity\OrderInterface);
+          if ($existing_cart->hasItems()) {
+            $cart_item_count += count($existing_cart->getItems());
+          break;
+        }
+      }
+      $variables['cart_item_count'] = $cart_item_count;
+    } // cart count
+
+    // Get current user ID.
+    $currentUser = \Drupal::currentUser();
+    $currentUserId = $currentUser->id();
+    $variables['user_id'] = $currentUserId;
+
+    $userAccount = \Drupal\user\Entity\User::load($currentUserId);
+
+    // Retrieve field data from that user
+    //$userBody = $userAccount->get('body')->value;
+
+    $userEmail = $userAccount->get('mail')->value;
+    $userName = $userAccount->get('name')->value;
+
+    $variables['user_email'] = $userEmail;
+    $variables['user_name'] = $userName;
+    
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node.html.twig.
+ */
+function comparenone_preprocess_node(array &$variables): void {
+
+}
+
+/**
+ * Implements hook_theme_suggestions_alter() for form templates.
+ * Creates unique template suggestion for form. 
+ * e.g. form--user-login-form.html.twig.
+ */
+function comparenone_theme_suggestions_alter(array &$suggestions, array $variables, $hook) {
+
+  if ($hook == 'form' & !empty($variables['element']['#id'])) {
+    $suggestions[] = 'form__' . str_replace('-', '_', $variables['element']['#id']);
+  }
+
+  if ($hook === 'select' && isset($variables['element']['#attributes']['data-drupal-selector']) && $variables['element']['#attributes']['data-drupal-selector'] == 'edit-field-product-category-target-id') {
+    $suggestions[] = 'select__' . str_replace('-', '_', $variables['element']['#attributes']['data-drupal-selector']);
+  }
+
+  if ($hook === 'select' && isset($variables['element']['#attributes']['data-drupal-selector']) && $variables['element']['#attributes']['data-drupal-selector'] == 'edit-field-location-target-id') {
+    $suggestions[] = 'select__' . str_replace('-', '_', $variables['element']['#attributes']['data-drupal-selector']);
+  }
+
+  if ($hook === 'select' && isset($variables['element']['#attributes']['data-drupal-selector']) && $variables['element']['#attributes']['data-drupal-selector'] == 'edit-field-brand-name-value') {
+    $suggestions[] = 'select__' . str_replace('-', '_', $variables['element']['#attributes']['data-drupal-selector']);
+  }
+
+  /****
+  if ($hook === 'input' && isset($variables['element']['#attributes']['data-drupal-selector']) && $variables['element']['#attributes']['data-drupal-selector'] == 'edit-title') {
+    $suggestions[] = 'input__textfield' .'_' . str_replace('-', '_', $variables['element']['#attributes']['data-drupal-selector']);
+  }
+  ****/
+}
+
+/**
+ * @param $suggestions
+ * @param array $variables
+  * Implements hook_theme_suggestions_input_alter() for user form templates.
+ * Creates unique template suggestion for user form. 
+ * e.g. input--submit--user-login-submit.html.twig, input--submit--register-form-submit.html.twig.
+ */
+function comparenone_theme_suggestions_input_alter(&$suggestions, array $variables) {
+  $element = $variables['element'];
+
+  if (isset($element['#attributes']['data-twig-form-submit'])) {
+    $suggestions[] = 'input__' . $element['#type'] . '_' .  
+    str_replace('-', '_', $element['#attributes']['data-twig-form-submit']); // without str_replace the suggestion is invalid 
+  }
+
+   if (isset($element['#attributes']['data-element-suggestion'])) {
+    $suggestions[] = 'input__textfield' .'_' . str_replace('-', '_', $variables['element']['#attributes']['data-element-suggestion']);
+  }
+}
+
+function comparenone_form_views_exposed_form_alter(&$form, &$form_state) {
+
+     //Got the Form Id by using inspect element/Firebug
+     if($form["#id"] == 'views-exposed-form-discover-search-form'){
+
+         //field_location_target_id is the Filter Identifier Key
+         $form['field_location_target_id']['#options']["All"] = 'Location';
+         $form['field_product_category_target_id']['#options']["All"] = 'Select category';
+
+         // Add a new attritube to submit input
+          $form['actions']['submit']['#attributes']['data-twig-form-submit'] = 'discover-exposed-form-submit';
+
+          // Add a new attritube to submit input
+          $form['title']['#attributes']['data-element-suggestion'] = 'title-discover-exposed-form';
+     }
+  }
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * Add views template suggestions.
+ * 
+ * @inheritdoc
+ */
+function comparenone_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
+  $suggestions[] = 'views_view__' . $variables['view']->id();
+}
+
+function comparenone_preprocess_views_view(&$variables) {
+  $hook_theme_id = $variables['view']->id();
+  //ksm($hook_theme_id);
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * Add views grid template suggestions.
+ * 
+ * @inheritdoc
+ */
+function comparenone_theme_suggestions_views_view_grid_alter(array &$suggestions, array $variables) {
+  $suggestions[] = 'views_view_grid__' . $variables['view']->id();
+}
+
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * Add views list template suggestions.
+ * 
+ * @inheritdoc
+ */
+function comparenone_theme_suggestions_views_view_list_alter(array &$suggestions, array $variables) {
+  $suggestions[] = 'views_view_list__' . $variables['view']->id();
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * Add views template suggestions.
+ * 
+ * @inheritdoc
+ */
+function comparenone_theme_suggestions_views_view_unformatted_alter(array &$suggestions, array $variables) {
+  $suggestions[] = 'views_view_unformatted__' . $variables['view']->id();
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ *
+ * Add views fields (enveloping several fields) template suggestions.
+ * 
+ * @inheritdoc
+ */
+function comparenone_theme_suggestions_views_view_fields_alter(array &$suggestions, array $variables) {
+  $suggestions[] = 'views_view_fields__' . $variables['view']->id();
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ *
+ * Add views field template suggestions.
+ * 
+ * @inheritdoc
+ */
+function comparenone_theme_suggestions_views_view_field_alter(array &$suggestions, array $variables) {
+  $suggestions[] = 'views_view_field__' . $variables['view']->id() . '_' . $variables['field']->field;
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ *
+ * Add views table template suggestions.
+ * 
+ * @inheritdoc
+ */
+function comparenone_theme_suggestions_views_view_table_alter(array &$suggestions, array $variables) {
+  $suggestions[] = 'views_view_table__' . $variables['view']->id();
+}
+
+
+/**
+ * Implements hook_theme_suggestions_alter
+ */
+function comparenone_theme_suggestions_table_alter(array &$suggestions, array $variables) {
+
+    if (isset($variables['element']) && isset($variables['element']['#type']) && $variables['element']['#type'] == 'table') {
+        $original_theme_hook = $variables['theme_hook_original'];
+
+        $suggestions[] = $original_theme_hook . '__' . str_replace('-', '_', $variables['element']['#id']);
+    }
+
+    return $suggestions;
+
+}
+
+
+/**
+ * Implements hook_theme_preprocess_entity_comparison_link
+ *
+function comparenone_preprocess_entity_comparison_link(array &$suggestions, array &$variables){
+  if (isset($variables['element']) && isset($variables['element']['#type']) && $variables['element']['#type'] == 'table') {
+        $original_theme_hook = $variables['theme_hook_original'];
+
+        $suggestions[] = $original_theme_hook . '__' . str_replace('-', '_', $variables['element']['#id']);
+    }
+
+    return $suggestions;
+}
+*/

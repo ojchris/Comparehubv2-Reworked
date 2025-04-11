@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * Theme override for an 'input' #type form element.
+ *
+ * Available variables:
+ * - attributes: A list of HTML attributes for the input element.
+ * - children: Optional additional rendered elements.
+ *
+ * @see template_preprocess_input()
+ */
+#}
+{%
+  set classes = [
+    'app-input',
+    'app-input-search',
+  ]
+%}
+
+<div class="centered-mast-filter-control">
+              <div class="filter-control-input app-input-container">
+                <button{{ attributes.addClass(classes) }} type="button">{{ children }}
+                
+                  <span class="search-button-text">
+                    Search Now
+                  </span>
+                  <span class="search-button-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M21.0004 20.9999L16.6504 16.6499" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>                      
+                  </span>
+                </button>
+              </div>
+            </div>

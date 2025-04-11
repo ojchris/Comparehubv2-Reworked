@@ -1,0 +1,109 @@
+@media only screen and (max-width: 600px) {
+
+
+    .page-secondary-mast {
+        background: var(--page-blue);
+        height: 224px; 
+        align-items: normal;
+        justify-content: center;
+        
+      }
+      
+
+    .page-secondary-mast-callout-illustration img{
+        display: none;
+      }
+      
+      .page-secondary-mast-heading {
+        color: var(--page-white);
+        font: var(--text-secondary-l);
+        font-weight: var(--secondary-font-semibold);
+        text-align: center;
+        padding-top: 10px;
+        /* background-color: aqua; */
+      }
+   
+      .page-secondary-mast-subtext{
+        text-align: center;
+        padding-top: 10px;
+
+      }
+  
+      .page-secondary-mast-caption {
+        color: var(--page-white);
+        font: var(--text-secondary-n);
+        font-weight: var(--primary-font-regular-light);
+        max-width: 375px; 
+        height: 90px;
+        text-align: center;
+        line-height: 30px;
+      
+      }
+
+      .section-after-secondary-mast {
+        padding-top: 63px;
+        width: auto;
+
+
+      }
+      .section-heading-tab{
+        width: 280px;
+        padding-left: 50px;      }
+    
+      .context-tab-selectors {
+        display: inline-flex;
+        gap: 8px;
+        background: var(--page-blue);
+        border-radius: 8px;
+        padding: 6px;
+      }
+      
+      .context-tab-selector {
+        padding: 10px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        color: var(--page-white);
+        font: var(--text-primary-n);
+        transition: background 0.65s ease;
+      }
+      
+      .active-tab-selector {
+        background: var(--page-white);
+        color: var(--page-blue);
+      }
+
+      .terms-section{
+        width: 100%;
+      }
+      .terms-section-content {
+        font: var(--text-primary-l);
+        color: var(--text-muted-color);
+        margin-top: 24px;
+        width: 375px;
+
+      }
+      
+      .terms-section-heading {
+        font: var(--text-primary-xl);
+        font-weight: var(--primary-font-regular-light);
+        color: var(--primary-text-color);
+        margin-top: 48px;
+        width: 360px;
+      }
+/*       
+      .terms-section-content {
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+      } */
+      
+      .terms-special-highlight {
+        border-bottom: 3px solid var(--page-muted-tone);
+      }
+
+
+
+
+
+
+    }

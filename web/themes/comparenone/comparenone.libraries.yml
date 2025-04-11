@@ -1,0 +1,37 @@
+# Main theme library.
+global:
+  js:
+    js/comparenone.js: {}
+    js/app.js: {}
+  css:
+    base:
+      css/variables.css: {}
+      css/app.css: {}
+      css/app.mobile.css: {}
+    theme:
+      css/theme/print.css: { media: print }
+
+terms:
+ js:
+   js/terms.js: {}
+
+discover-script:
+  js:
+    js/discover.js: {}
+
+discover-style:
+  css:
+    theme:
+      css/discover_mobile.css: {}
+      css/discover.css: {}
+
+cart-styles:
+  css:
+    theme:
+      css/cart.css: {}
+      css/compare-result.mobile.css: {}
+
+compare-list-styles:
+  css:
+    theme:
+      css/compare-list.css: {}

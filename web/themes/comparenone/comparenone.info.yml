@@ -1,0 +1,63 @@
+name: comparenone
+type: theme
+base theme: stable9
+description: A responsive, mobile-first theme for the CompareHub project&quot;
+package: custom
+core_version_requirement: ^10
+libraries:
+  - comparenone/global
+regions:
+  header: 'Header'
+  primary_menu: 'Primary menu'
+  secondary_menu: 'Secondary menu'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+  featured: 'Featured'
+  breadcrumb: 'Breadcrumb'
+  content: 'Content'
+  sidebar_first: 'Sidebar first'
+  sidebar_second: 'Sidebar second'
+  footer: 'Footer'
+stylesheets-remove:
+  - 'css/base/elements.css'
+  - 'css/component/block.css'
+  - 'css/component/breadcrumb.css'
+  - 'css/component/field.css'
+  - 'css/component/form.css'
+  - 'css/component/header.css'
+  - 'css/component/menu.css'
+  - 'css/component/messages.css'
+  - 'css/component/node.css'
+  - 'css/component/sidebar.css'
+  - 'css/component/table.css'
+  - 'css/component/tabs.css'
+  - 'css/component/buttons.css'
+  - 'css/layout/layout.css'
+libraries-override:
+  system/base:
+    css:
+      component:
+        /core/themes/stable9/css/system/components/ajax-progress.module.css: false
+        /core/themes/stable9/css/system/components/align.module.css: false
+        /core/themes/stable9/css/system/components/autocomplete-loading.module.css: false
+        /core/themes/stable9/css/system/components/fieldgroup.module.css: false
+        /core/themes/stable9/css/system/components/container-inline.module.css: false
+        /core/themes/stable9/css/system/components/clearfix.module.css: false
+        /core/themes/stable9/css/system/components/details.module.css: false
+        /core/themes/stable9/css/system/components/hidden.module.css: false
+        /core/themes/stable9/css/system/components/item-list.module.css: false
+        /core/themes/stable9/css/system/components/js.module.css: false
+        /core/themes/stable9/css/system/components/nowrap.module.css: false
+        /core/themes/stable9/css/system/components/position-container.module.css: false
+        /core/themes/stable9/css/system/components/progress.module.css: false
+        /core/themes/stable9/css/system/components/reset-appearance.module.css: false
+        /core/themes/stable9/css/system/components/resize.module.css: false
+        /core/themes/stable9/css/system/components/sticky-header.module.css: false
+        /core/themes/stable9/css/system/components/system-status-counter.css: false
+        /core/themes/stable9/css/system/components/system-status-report-counters.css: false
+        /core/themes/stable9/css/system/components/system-status-report-general-info.css: false
+        /core/themes/stable9/css/system/components/tabledrag.module.css: false
+        /core/themes/stable9/css/system/components/tablesort.module.css: false
+        /core/themes/stable9/css/system/components/tree-child.module.css: false
+  
+

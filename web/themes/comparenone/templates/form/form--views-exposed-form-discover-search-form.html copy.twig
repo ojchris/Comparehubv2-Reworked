@@ -1,0 +1,39 @@
+{#
+/**
+ * @file
+ * Theme override for a 'form' element.
+ *
+ * Available variables
+ * - attributes: A list of HTML attributes for the wrapper element.
+ * - children: The child elements of the form.
+ *
+ * @see template_preprocess_form()
+ */
+#}
+{%
+  set classes = [
+    'centered-mast-filter-controls',
+  ]
+%}
+<section class="page-section page-centered-mast">
+         <div class="mast-image-container mast-image-right">
+          <img src="https://cdn.glitch.global/2ca87fd5-f4b7-46d3-bcfe-a2900f7bead1/28a0790caa86e0477b138c8595be09a0.png?v=1692044981442" alt="" class="mast-image">
+         </div>
+         <div class="mast-image-container mast-image-left">
+          <img src="https://cdn.glitch.global/2ca87fd5-f4b7-46d3-bcfe-a2900f7bead1/5f46ea7e0ae299dda96c56f401c612b2.png?v=1692044977643" alt="" class="mast-image">
+         </div>
+         <div class="section-heading centered-mast-heading discover-centered-mast-heading">
+          Discover and compare
+         </div>
+         <div class="section-subheading centered-mast-subheading">
+          <div class="centered-mast-subheading-text">
+            Find everything you need from huge collection of products, search, compare and choose from the best brand
+          </div>
+         </div>
+         <div class="section-content centered-mast-content">
+          <div class="centered-mast-filter-controls">
+      <form{{ attributes.addClass(classes) }}>
+        {{ children }}
+      </form>
+    </div>
+</section>
