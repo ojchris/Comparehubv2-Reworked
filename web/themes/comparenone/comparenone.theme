@@ -11,9 +11,9 @@ declare(strict_types = 1);
  */
 function comparenone_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
   
-  // Change add-to-cart button text to 'Add to compare'
+  // Change add-to-cart button text to 'Add to compare Cart'
   if ($form_state->getBuildInfo()['callback_object'] instanceof \Drupal\commerce_cart\Form\AddToCartFormInterface) {
-  $form[ 'actions' ][ 'submit' ][ '#value' ] = t( 'Add to Compare' );  
+  $form[ 'actions' ][ 'submit' ][ '#value' ] = t( 'Add to Compare Cart' );  
   }
 
   // Turn views exposed filter Textfield (product_brand) into a Select list
