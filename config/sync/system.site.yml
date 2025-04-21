@@ -3,13 +3,13 @@ _core:
 langcode: en
 uuid: e6454dac-0a65-48cd-865c-c732fb86ae5e
 name: 'Drush Site-Install'
-mail: admin@example.com
+mail: admin@comparehub.ng
 slogan: ''
 page:
   403: ''
   404: ''
-  front: /node
+  front: /node/4
 admin_compact_mode: false
 weight_select_max: 100
 default_langcode: en
-mail_notification: null
+mail_notification: ''

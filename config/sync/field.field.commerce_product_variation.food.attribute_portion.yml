@@ -1,4 +1,4 @@
-uuid: 173af1cf-2c1e-46ec-b304-50a504a2ccef
+uuid: 3ba9b7e1-3b2a-41e9-be53-e216cdb1234b
 langcode: en
 status: true
 dependencies:
@@ -12,7 +12,7 @@ entity_type: commerce_product_variation
 bundle: food
 label: Portion
 description: ''
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -21,9 +21,4 @@ settings:
   handler_settings:
     target_bundles:
       portion: portion
-    sort:
-      field: _none
-      direction: ASC
-    auto_create: false
-    auto_create_bundle: ''
 field_type: entity_reference

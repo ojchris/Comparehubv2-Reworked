@@ -1,4 +1,4 @@
-uuid: e094df9d-e61a-4c12-a47a-47f8d625e140
+uuid: e97fe5e2-2c6f-4d31-8333-45be1dde9ec0
 langcode: en
 status: true
 dependencies:
@@ -7,13 +7,10 @@ dependencies:
     - field.field.commerce_product_variation.food.attribute_portion
     - field.field.commerce_product_variation.food.attribute_protein
     - field.field.commerce_product_variation.food.field_image
+    - image.style.product_thumbnails_145x150
   module:
     - commerce_price
-    - commerce_variation_cart_form
     - image
-third_party_settings:
-  commerce_variation_cart_form:
-    combine: false
 id: commerce_product_variation.food.default
 targetEntityType: commerce_product_variation
 bundle: food
@@ -21,10 +18,10 @@ mode: default
 content:
   field_image:
     type: image
-    label: above
+    label: hidden
     settings:
       image_link: ''
-      image_style: ''
+      image_style: product_thumbnails_145x150
       image_loading:
         attribute: lazy
     third_party_settings: {  }
@@ -32,7 +29,7 @@ content:
     region: content
   list_price:
     type: commerce_price_default
-    label: above
+    label: hidden
     settings:
       strip_trailing_zeroes: false
       currency_display: symbol
@@ -41,7 +38,7 @@ content:
     region: content
   price:
     type: commerce_price_default
-    label: above
+    label: hidden
     settings:
       strip_trailing_zeroes: false
       currency_display: symbol

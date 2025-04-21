@@ -1,0 +1,23 @@
+uuid: 7d3346e3-4f13-4d85-a8a9-afa3fbf00b5b
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+  theme:
+    - comparenone
+_core:
+  default_config_hash: 0gq3VPg-_UM69FCCWurLFIrrnIjC2HLKhwo9iQNtcUo
+id: comparenone_syndicate
+theme: comparenone
+region: header
+weight: 0
+provider: null
+plugin: node_syndicate_block
+settings:
+  id: node_syndicate_block
+  label: 'RSS feed'
+  label_display: '0'
+  provider: node
+  block_count: 10
+visibility: {  }

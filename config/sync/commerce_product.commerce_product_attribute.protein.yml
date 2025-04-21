@@ -4,4 +4,4 @@ status: true
 dependencies: {  }
 id: protein
 label: Protein
-elementType: radios
+elementType: select

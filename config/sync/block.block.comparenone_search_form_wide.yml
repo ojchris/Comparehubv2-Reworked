@@ -1,0 +1,23 @@
+uuid: 10344f82-fcb8-493c-b667-d6d72f24b5f7
+langcode: en
+status: true
+dependencies:
+  module:
+    - search
+  theme:
+    - comparenone
+_core:
+  default_config_hash: imMyHD6LYci0gtXq56qr9ZKGHzbEG9uFydrN5EhKtSU
+id: comparenone_search_form_wide
+theme: comparenone
+region: secondary_menu
+weight: -5
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: 'Search form (wide)'
+  label_display: '0'
+  provider: search
+  page_id: ''
+visibility: {  }

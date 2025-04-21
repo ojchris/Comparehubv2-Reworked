@@ -1,4 +1,4 @@
-uuid: 47fa5e32-128d-4f18-862e-e5228a229ae4
+uuid: 5863702e-7c91-4ff1-9273-4f2ea294d81f
 langcode: en
 status: true
 dependencies:
@@ -10,11 +10,7 @@ dependencies:
     - field.field.commerce_product_variation.food.field_image
   module:
     - commerce_price
-    - commerce_variation_cart_form
     - image
-third_party_settings:
-  commerce_variation_cart_form:
-    combine: true
 id: commerce_product_variation.food.discover_variations
 targetEntityType: commerce_product_variation
 bundle: food
@@ -22,7 +18,7 @@ mode: discover_variations
 content:
   field_image:
     type: image
-    label: hidden
+    label: above
     settings:
       image_link: ''
       image_style: ''
@@ -33,29 +29,21 @@ content:
     region: content
   list_price:
     type: commerce_price_default
-    label: hidden
+    label: above
+    settings:
+      strip_trailing_zeroes: false
+      currency_display: symbol
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  price:
+    type: commerce_price_default
+    label: above
     settings:
       strip_trailing_zeroes: false
       currency_display: symbol
     third_party_settings: {  }
     weight: 2
-    region: content
-  price:
-    type: commerce_price_default
-    label: hidden
-    settings:
-      strip_trailing_zeroes: false
-      currency_display: symbol
-    third_party_settings: {  }
-    weight: 3
-    region: content
-  title:
-    type: string
-    label: above
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 1
     region: content
 hidden:
   attribute_portion: true
@@ -63,3 +51,4 @@ hidden:
   commerce_variation_cart_form: true
   product_id: true
   sku: true
+  title: true

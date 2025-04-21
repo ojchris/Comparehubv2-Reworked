@@ -1,20 +1,19 @@
-uuid: a993b490-1b66-4a56-b9e0-67f5c6b70aae
+uuid: 0d8c0d01-c6a2-44c2-91c8-d9ad2ed80f7d
 langcode: en
 status: true
 dependencies:
   config:
-    - commerce_product.commerce_product_type.drink
-    - field.field.commerce_product.drink.field_description
-    - field.field.commerce_product.drink.field_image
-    - field.field.commerce_product.drink.field_product_brand
-    - field.field.commerce_product.drink.field_product_category
+    - commerce_product.commerce_product_type.food
+    - field.field.commerce_product.food.field_description
+    - field.field.commerce_product.food.field_image
+    - field.field.commerce_product.food.field_product_brand
+    - field.field.commerce_product.food.field_product_category
   module:
     - commerce_product
-    - image
     - text
-id: commerce_product.drink.default
+id: commerce_product.food.default
 targetEntityType: commerce_product
-bundle: drink
+bundle: food
 mode: default
 content:
   field_description:
@@ -22,18 +21,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 12
-    region: content
-  field_image:
-    type: image
-    label: hidden
-    settings:
-      image_link: ''
-      image_style: ''
-      image_loading:
-        attribute: lazy
-    third_party_settings: {  }
-    weight: 15
+    weight: 2
     region: content
   field_product_brand:
     type: entity_reference_label
@@ -41,7 +29,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 13
+    weight: 3
     region: content
   field_product_category:
     type: entity_reference_label
@@ -49,7 +37,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 14
+    weight: 4
     region: content
   title:
     type: string
@@ -57,7 +45,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: -5
+    weight: 0
     region: content
   variations:
     type: commerce_add_to_cart
@@ -65,9 +53,10 @@ content:
     settings:
       combine: true
     third_party_settings: {  }
-    weight: 10
+    weight: 1
     region: content
 hidden:
   created: true
+  field_image: true
   stores: true
   uid: true

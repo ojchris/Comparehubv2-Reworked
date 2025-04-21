@@ -1,4 +1,4 @@
-uuid: 2124bbde-aa06-4079-b2f6-bc6ee789e366
+uuid: ac57262d-6b3d-4558-94ac-13952a96c276
 langcode: en
 status: true
 dependencies:
@@ -12,7 +12,7 @@ entity_type: commerce_product_variation
 bundle: food
 label: Protein
 description: ''
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -21,9 +21,4 @@ settings:
   handler_settings:
     target_bundles:
       protein: protein
-    sort:
-      field: _none
-      direction: ASC
-    auto_create: false
-    auto_create_bundle: ''
 field_type: entity_reference

@@ -1,16 +1,16 @@
-uuid: 9925bd42-277c-4195-ac86-12564ff65bd2
+uuid: 257a0d92-2120-44f3-ad37-23ea0f5fd64a
 langcode: en
 status: true
 dependencies:
   config:
-    - commerce_product.commerce_product_variation_type.food_v2
-    - field.storage.commerce_product_variation.field_image
+    - commerce_product.commerce_product_type.food
+    - field.storage.commerce_product.field_image
   module:
     - image
-id: commerce_product_variation.food_v2.field_image
+id: commerce_product.food.field_image
 field_name: field_image
-entity_type: commerce_product_variation
-bundle: food_v2
+entity_type: commerce_product
+bundle: food
 label: Image
 description: ''
 required: false
@@ -22,12 +22,12 @@ settings:
   handler_settings: {  }
   file_directory: '[date:custom:Y]-[date:custom:m]'
   file_extensions: 'png gif jpg jpeg webp'
-  max_filesize: ''
+  max_filesize: '2 MB'
   max_resolution: ''
   min_resolution: ''
   alt_field: true
-  alt_field_required: true
-  title_field: false
+  alt_field_required: false
+  title_field: true
   title_field_required: false
   default_image:
     uuid: ''

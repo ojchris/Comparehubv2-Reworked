@@ -1,13 +1,13 @@
-uuid: 9d4a239c-cd85-41cb-9435-092522cd0669
+uuid: dc25ae16-4cbe-4ede-969e-d91ff2f0d117
 langcode: en
 status: true
 dependencies: {  }
-id: food_v2
+id: food
 label: Food
 traits: {  }
 locked: false
 description: ''
 variationTypes:
-  - food_v2
+  - food
 multipleVariations: true
 injectVariationFields: true

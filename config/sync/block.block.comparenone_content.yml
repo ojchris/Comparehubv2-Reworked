@@ -1,0 +1,22 @@
+uuid: 8e6b0d60-fe1b-4a6d-b6d1-5b1853f26c27
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - comparenone
+_core:
+  default_config_hash: erQSEZF2XUjNmgTl0uNRBzmg18ZGXwUcw2FhApoeuHk
+id: comparenone_content
+theme: comparenone
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }

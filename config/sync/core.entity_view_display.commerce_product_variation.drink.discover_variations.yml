@@ -7,6 +7,7 @@ dependencies:
     - core.entity_view_mode.commerce_product_variation.discover_variations
     - field.field.commerce_product_variation.drink.attribute_size
     - field.field.commerce_product_variation.drink.field_image
+    - image.style.product_thumbnails_145x150
   module:
     - commerce_price
     - image
@@ -20,7 +21,7 @@ content:
     label: above
     settings:
       image_link: ''
-      image_style: ''
+      image_style: product_thumbnails_145x150
       image_loading:
         attribute: lazy
     third_party_settings: {  }
