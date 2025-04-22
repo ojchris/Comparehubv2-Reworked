@@ -26,6 +26,7 @@
         "drupal/inline_entity_form": "^3.0@RC",
         "drupal/paragraphs": "^1.19",
         "drupal/slick": "^3.0",
+        "drupal/slick_extras": "^2.0",
         "drupal/slick_views": "^3.0",
         "drupal/smart_date": "^4.2",
         "drush/drush": "^13.3"
