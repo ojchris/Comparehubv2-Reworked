@@ -10,6 +10,7 @@ dependencies:
     - image.style.product_thumbnails_145x150
   module:
     - commerce_price
+    - field_formatter_class
     - image
 id: commerce_product_variation.food.default
 targetEntityType: commerce_product_variation
@@ -24,7 +25,9 @@ content:
       image_style: product_thumbnails_145x150
       image_loading:
         attribute: lazy
-    third_party_settings: {  }
+    third_party_settings:
+      field_formatter_class:
+        class: variation-image
     weight: 0
     region: content
   list_price:
@@ -33,7 +36,9 @@ content:
     settings:
       strip_trailing_zeroes: false
       currency_display: symbol
-    third_party_settings: {  }
+    third_party_settings:
+      field_formatter_class:
+        class: variation-list-price
     weight: 1
     region: content
   price:
@@ -42,7 +47,9 @@ content:
     settings:
       strip_trailing_zeroes: false
       currency_display: symbol
-    third_party_settings: {  }
+    third_party_settings:
+      field_formatter_class:
+        class: variation-price
     weight: 2
     region: content
 hidden:

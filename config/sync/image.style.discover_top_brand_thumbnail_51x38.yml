@@ -1,0 +1,15 @@
+uuid: bfd7cb59-ef39-4ddc-ac84-ac4abd3998fb
+langcode: en
+status: true
+dependencies: {  }
+name: discover_top_brand_thumbnail_51x38
+label: 'Discover top brand thumbnail 51x38'
+effects:
+  14c5000e-7623-408e-bcbc-9fa7a4ed1b7e:
+    uuid: 14c5000e-7623-408e-bcbc-9fa7a4ed1b7e
+    id: image_scale
+    weight: 1
+    data:
+      width: 51
+      height: 38
+      upscale: false
