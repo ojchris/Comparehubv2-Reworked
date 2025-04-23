@@ -1,0 +1,23 @@
+uuid: 37d36712-6ee6-49c0-8272-e1c338400097
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.discover
+  module:
+    - views
+  theme:
+    - comparenone
+id: views_exposed_form_discover_search
+theme: comparenone
+region: featured
+weight: 0
+provider: null
+plugin: 'views_exposed_filter_block:discover-page_1'
+settings:
+  id: 'views_exposed_filter_block:discover-page_1'
+  label: ''
+  label_display: '0'
+  provider: views
+  views_label: ''
+visibility: {  }

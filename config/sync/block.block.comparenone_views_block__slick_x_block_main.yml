@@ -1,0 +1,24 @@
+uuid: 216b36f4-78e1-47bf-b35b-e0917d0aa295
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.slick_x
+  module:
+    - views
+  theme:
+    - comparenone
+id: comparenone_views_block__slick_x_block_main
+theme: comparenone
+region: content
+weight: -8
+provider: null
+plugin: 'views_block:slick_x-block_main'
+settings:
+  id: 'views_block:slick_x-block_main'
+  label: ''
+  label_display: visible
+  provider: views
+  views_label: ''
+  items_per_page: none
+visibility: {  }
