@@ -1,0 +1,26 @@
+uuid: c3cd523e-3b8e-40f2-a596-c1851733a6e4
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - comparenone
+id: comparenone_messages_2
+theme: comparenone
+region: breadcrumb
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: Messages
+  label_display: '0'
+  provider: system
+visibility:
+  response_status:
+    id: response_status
+    negate: false
+    status_codes:
+      - 200
+      - 403
