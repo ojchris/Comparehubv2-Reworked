@@ -176,10 +176,17 @@ function comparenone_theme_suggestions_input_alter(&$suggestions, array $variabl
   }
 }
 
+
+/**
+ * @param $suggestions
+ * @param array $variables
+  * Implements hook_theme_sform_views_exposed_form_alter() for exposed form templates.
+ * Creates unique template suggestion for exposed form inputs. 
+ */
 function comparenone_form_views_exposed_form_alter(&$form, &$form_state) {
 
      //Got the Form Id by using inspect element/Firebug
-     if($form["#id"] == 'views-exposed-form-discover-search-form'){
+     if($form["#id"] == 'views-exposed-form-discover-page-1'){
 
          //field_location_target_id is the Filter Identifier Key
          $form['field_location_target_id']['#options']["All"] = 'Location';
