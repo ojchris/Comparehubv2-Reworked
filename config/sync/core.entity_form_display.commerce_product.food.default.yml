@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - commerce_product.commerce_product_type.food
+    - field.field.commerce_product.food.feeds_item
     - field.field.commerce_product.food.field_description
     - field.field.commerce_product.food.field_image
     - field.field.commerce_product.food.field_product_brand
@@ -103,4 +104,5 @@ content:
       placeholder: ''
     third_party_settings: {  }
 hidden:
+  feeds_item: true
   variations: true

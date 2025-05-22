@@ -5,6 +5,7 @@ dependencies:
   config:
     - commerce_product.commerce_product_variation_type.default
     - core.entity_view_mode.commerce_product_variation.discover_variations
+    - field.field.commerce_product_variation.default.feeds_item
   module:
     - commerce_price
 id: commerce_product_variation.default.discover_variations
@@ -39,5 +40,6 @@ content:
     region: content
 hidden:
   commerce_variation_cart_form: true
+  feeds_item: true
   list_price: true
   title: true

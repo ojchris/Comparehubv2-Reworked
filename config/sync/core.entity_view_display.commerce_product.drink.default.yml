@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - commerce_product.commerce_product_type.drink
+    - field.field.commerce_product.drink.feeds_item
     - field.field.commerce_product.drink.field_description
     - field.field.commerce_product.drink.field_image
     - field.field.commerce_product.drink.field_product_brand
@@ -59,6 +60,7 @@ content:
     region: content
 hidden:
   created: true
+  feeds_item: true
   field_image: true
   stores: true
   uid: true

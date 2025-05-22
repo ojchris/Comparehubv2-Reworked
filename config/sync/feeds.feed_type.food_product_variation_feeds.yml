@@ -1,0 +1,142 @@
+uuid: b87cf42b-b529-4c2d-a81d-2d1b03dbcf86
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_variation_type.food
+    - field.field.commerce_product_variation.food.attribute_portion
+    - field.field.commerce_product_variation.food.attribute_protein
+    - field.field.commerce_product_variation.food.field_image
+  module:
+    - commerce_feeds
+    - commerce_product
+label: 'Food Product  Variation Feeds'
+id: food_product_variation_feeds
+description: 'Feed type for Food Products'
+help: 'Create new or update exisiting Food product variations'
+import_period: -1
+fetcher: upload
+fetcher_configuration:
+  allowed_extensions: 'txt csv tsv xml opml'
+  directory: 'public://feeds'
+parser: csv
+parser_configuration:
+  delimiter: ','
+  no_headers: false
+  line_limit: 100
+processor: 'entity:commerce_product_variation'
+processor_configuration:
+  values:
+    type: food
+  langcode: en
+  insert_new: 1
+  update_existing: 2
+  update_non_existent: _keep
+  skip_hash_check: false
+  skip_validation: false
+  skip_validation_types: {  }
+  authorize: true
+  revision: false
+  expire: -1
+  owner_feed_author: true
+  owner_id: 0
+custom_sources:
+  sku:
+    value: SKU
+    label: SKU
+    machine_name: sku
+    type: csv
+  price:
+    value: Price
+    label: Price
+    machine_name: price
+    type: csv
+  title:
+    value: Title
+    label: Title
+    machine_name: title
+    type: csv
+  portion:
+    value: Portion
+    label: Portion
+    machine_name: portion
+    type: csv
+  image_file_id:
+    value: 'Image File ID'
+    label: 'Image File ID'
+    machine_name: image_file_id
+    type: csv
+  image_alternative_text:
+    value: 'Image Alternative Text'
+    label: 'Image Alternative Text'
+    machine_name: image_alternative_text
+    type: csv
+  image_title:
+    value: 'Image Title'
+    label: 'Image Title'
+    machine_name: image_title
+    type: csv
+  protein:
+    value: Protein
+    label: Protein
+    machine_name: protein
+    type: csv
+  attribute_portion:
+    value: Portion
+    label: Portion
+    machine_name: attribute_portion
+    type: csv
+  attribute_protein:
+    value: Protein
+    label: Protein
+    machine_name: attribute_protein
+    type: csv
+mappings:
+  -
+    target: sku
+    map:
+      value: sku
+    settings: {  }
+    unique:
+      value: 1
+  -
+    target: price
+    map:
+      number: price
+    settings:
+      currency_code: NGN
+  -
+    target: title
+    map:
+      value: title
+    settings:
+      language: null
+    unique: {  }
+  -
+    target: field_image
+    map:
+      target_id: image_file_id
+      alt: image_alternative_text
+      title: image_title
+    settings:
+      existing: 2
+      language: null
+      reference_by: filename
+      autocreate: false
+      autocreate_bundle: false
+  -
+    target: attribute_portion
+    map:
+      target_id: attribute_portion
+    settings:
+      reference_by: name
+      autocreate: false
+      autocreate_bundle: portion
+  -
+    target: attribute_protein
+    map:
+      target_id: attribute_protein
+    settings:
+      reference_by: name
+      autocreate: false
+      autocreate_bundle: protein

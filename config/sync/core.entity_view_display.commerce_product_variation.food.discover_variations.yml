@@ -7,6 +7,7 @@ dependencies:
     - core.entity_view_mode.commerce_product_variation.discover_variations
     - field.field.commerce_product_variation.food.attribute_portion
     - field.field.commerce_product_variation.food.attribute_protein
+    - field.field.commerce_product_variation.food.feeds_item
     - field.field.commerce_product_variation.food.field_image
   module:
     - commerce_price
@@ -49,6 +50,7 @@ hidden:
   attribute_portion: true
   attribute_protein: true
   commerce_variation_cart_form: true
+  feeds_item: true
   product_id: true
   sku: true
   title: true

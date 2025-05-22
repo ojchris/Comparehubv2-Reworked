@@ -1,0 +1,86 @@
+uuid: 178b5ea7-0a0d-4c9e-93ad-65a1e02b85f6
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.drink
+    - field.field.commerce_product.drink.field_description
+    - field.field.commerce_product.drink.field_product_brand
+  module:
+    - commerce_product
+label: 'Drink Product Feeds'
+id: drink_product_feeds
+description: 'Feed type for Drink Products'
+help: 'Create new or update exisiting Drink products'
+import_period: -1
+fetcher: upload
+fetcher_configuration:
+  allowed_extensions: 'txt csv tsv xml opml'
+  directory: 'public://feeds'
+parser: csv
+parser_configuration:
+  delimiter: ','
+  no_headers: false
+  line_limit: 100
+processor: 'entity:commerce_product'
+processor_configuration:
+  values:
+    type: drink
+  langcode: en
+  insert_new: 1
+  update_existing: 2
+  update_non_existent: _keep
+  skip_hash_check: false
+  skip_validation: false
+  skip_validation_types: {  }
+  authorize: true
+  revision: false
+  expire: -1
+  owner_feed_author: true
+  owner_id: 0
+custom_sources:
+  title:
+    value: Title
+    label: Title
+    machine_name: title
+    type: csv
+  description:
+    value: Description
+    label: Description
+    machine_name: description
+    type: csv
+  brand_name:
+    value: 'Brand Name'
+    label: 'Brand Name'
+    machine_name: brand_name
+    type: csv
+  brand_logo:
+    value: 'Brand Logo'
+    label: 'Brand Logo'
+    machine_name: brand_logo
+    type: csv
+mappings:
+  -
+    target: title
+    map:
+      value: title
+    settings:
+      language: null
+    unique:
+      value: 1
+  -
+    target: field_description
+    map:
+      value: description
+    settings:
+      language: null
+      format: plain_text
+  -
+    target: field_product_brand
+    map:
+      target_id: brand_name
+    settings:
+      language: null
+      reference_by: title
+      autocreate: false
+      autocreate_bundle: brand

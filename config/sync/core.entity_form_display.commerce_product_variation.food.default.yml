@@ -6,6 +6,7 @@ dependencies:
     - commerce_product.commerce_product_variation_type.food
     - field.field.commerce_product_variation.food.attribute_portion
     - field.field.commerce_product_variation.food.attribute_protein
+    - field.field.commerce_product_variation.food.feeds_item
     - field.field.commerce_product_variation.food.field_image
     - image.style.thumbnail
   module:
@@ -59,5 +60,6 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  feeds_item: true
   list_price: true
   uid: true

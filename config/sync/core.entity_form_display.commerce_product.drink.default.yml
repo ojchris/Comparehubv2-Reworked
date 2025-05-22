@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - commerce_product.commerce_product_type.drink
+    - field.field.commerce_product.drink.feeds_item
     - field.field.commerce_product.drink.field_description
     - field.field.commerce_product.drink.field_image
     - field.field.commerce_product.drink.field_product_brand
@@ -103,4 +104,5 @@ content:
       placeholder: ''
     third_party_settings: {  }
 hidden:
+  feeds_item: true
   variations: true

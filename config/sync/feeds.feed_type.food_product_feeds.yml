@@ -1,0 +1,128 @@
+uuid: 1cb68df1-ff5c-479d-98e7-e553aae2f878
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.food
+    - field.field.commerce_product.food.field_description
+    - field.field.commerce_product.food.field_product_brand
+  module:
+    - commerce_feeds
+    - commerce_product
+label: 'Food Product Feeds'
+id: food_product_feeds
+description: 'Feed type for Food Products'
+help: 'Create new or update exisiting Food products'
+import_period: -1
+fetcher: upload
+fetcher_configuration:
+  allowed_extensions: 'txt csv tsv xml opml'
+  directory: 'public://feeds'
+parser: csv
+parser_configuration:
+  delimiter: ','
+  no_headers: false
+  line_limit: 100
+processor: 'entity:commerce_product'
+processor_configuration:
+  values:
+    type: food
+  langcode: en
+  insert_new: 1
+  update_existing: 2
+  update_non_existent: _keep
+  skip_hash_check: false
+  skip_validation: false
+  skip_validation_types: {  }
+  authorize: true
+  revision: false
+  expire: -1
+  owner_feed_author: true
+  owner_id: 0
+custom_sources:
+  sku:
+    value: SKU
+    label: SKU
+    machine_name: sku
+    type: csv
+  title:
+    value: Title
+    label: Title
+    machine_name: title
+    type: csv
+  product_id:
+    value: 'Product ID'
+    label: 'Product ID'
+    machine_name: product_id
+    type: csv
+  description:
+    value: Description
+    label: Description
+    machine_name: description
+    type: csv
+  business_name:
+    value: 'Business Name'
+    label: 'Business Name'
+    machine_name: business_name
+    type: csv
+  store:
+    value: Store
+    label: Store
+    machine_name: store
+    type: csv
+  title_variation_feed:
+    value: Title
+    label: Title
+    machine_name: title_variation_feed
+    type: csv
+  variation:
+    value: Variation
+    label: Variation
+    machine_name: variation
+    type: csv
+  sku_variation:
+    value: SKU
+    label: SKU
+    machine_name: sku_variation
+    type: csv
+mappings:
+  -
+    target: title
+    map:
+      value: title_variation_feed
+    settings:
+      language: null
+    unique: {  }
+  -
+    target: field_description
+    map:
+      value: description
+    settings:
+      language: null
+      format: plain_text
+  -
+    target: field_product_brand
+    map:
+      target_id: business_name
+    settings:
+      language: null
+      reference_by: title
+      autocreate: false
+      autocreate_bundle: brand
+  -
+    target: stores
+    map:
+      target_id: store
+    settings:
+      reference_by: store_id
+      autocreate: 0
+      autocreate_bundle: false
+  -
+    target: variations
+    map:
+      target_id: sku_variation
+    settings:
+      reference_by: sku
+      feeds_item: guid
+      autocreate: 0
+      autocreate_bundle: food

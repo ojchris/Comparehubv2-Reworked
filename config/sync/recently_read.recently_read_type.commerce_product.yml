@@ -1,0 +1,7 @@
+uuid: cb6626c2-446a-485b-87ee-6d2a86d49de7
+langcode: en
+status: true
+dependencies: {  }
+id: commerce_product
+label: Product
+types: {  }
