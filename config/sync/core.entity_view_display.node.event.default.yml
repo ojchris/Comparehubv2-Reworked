@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.event.field_banner
+    - field.field.node.event.field_brand
     - field.field.node.event.field_description
     - field.field.node.event.field_scheduled_date
     - node.type.event
@@ -27,6 +28,14 @@ content:
         attribute: lazy
     third_party_settings: {  }
     weight: 101
+    region: content
+  field_brand:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 104
     region: content
   field_description:
     type: text_default

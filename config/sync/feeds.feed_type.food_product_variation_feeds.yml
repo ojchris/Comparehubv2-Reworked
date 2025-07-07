@@ -119,10 +119,10 @@ mappings:
       alt: image_alternative_text
       title: image_title
     settings:
-      existing: 2
-      language: null
-      reference_by: filename
-      autocreate: false
+      language: ''
+      reference_by: fid
+      autocreate: 0
+      existing: '1'
       autocreate_bundle: false
   -
     target: attribute_portion

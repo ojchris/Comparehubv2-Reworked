@@ -1,0 +1,29 @@
+uuid: d11df04f-36fd-43db-8079-c0e581cce6e0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_brand
+    - node.type.brand
+    - node.type.event
+id: node.event.field_brand
+field_name: field_brand
+entity_type: node
+bundle: event
+label: Brand
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      brand: brand
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
