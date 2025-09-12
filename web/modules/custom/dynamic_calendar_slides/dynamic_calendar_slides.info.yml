@@ -1,0 +1,8 @@
+name: 'Dynamic Calendar Slides'
+type: module
+description: 'Dynamically control slides by clicking calendar dates'
+package: comparehub
+core_version_requirement: ^10 || ^11
+dependencies:
+  - fullcalendar:fullcalendar
+  - slick:slick
