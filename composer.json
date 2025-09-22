@@ -119,6 +119,9 @@
             },
             "drupal/core": {
                 "Fix Missing 'date' Plugin for Views error": "https://www.drupal.org/files/issues/2024-06-24/2325899-212.patch"
+            },
+            "drupal/fullcalendar": {
+                "Fix PHP/Ajax error, type mismatch, fullcalendar_field_is_date()": "patches/fullcalendar-php-ajax-type-mismatch.patch" //issue #3541914 https://www.drupal.org/project/fullcalendar/issues/3541914
             }
         }
     }

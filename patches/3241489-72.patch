@@ -1,0 +1,28 @@
+diff --git a/fullcalendar.module b/fullcalendar.module
+index 5cadcfc8291a5c705be2de4d706286089afd826c..5fabd9b6a23cc0946e27885019f4aacb30c2bb3a 100644
+--- a/fullcalendar.module
++++ b/fullcalendar.module
+@@ -10,6 +10,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
+ use Drupal\Core\Url;
+ use Drupal\views\Plugin\views\field\Custom;
+ use Drupal\views\Plugin\views\field\EntityField;
++use Drupal\views\Plugin\views\field\Date;
+ 
+ /**
+  * The minimum supported version of the FullCalendar plugin.
+@@ -71,13 +72,13 @@ function fullcalendar_form_views_ui_edit_display_form_alter(array &$form, FormSt
+ /**
+  * Determines if a given field is a date field.
+  *
+- * @param \Drupal\views\Plugin\views\field\EntityField|\Drupal\views\Plugin\views\field\Custom $field
++ * @param \Drupal\views\Plugin\views\field\EntityField|\Drupal\views\Plugin\views\field\Date|\Drupal\views\Plugin\views\field\Custom $field
+  *   A Views field handler object.
+  *
+  * @return bool
+  *   Boolean, TRUE if the field is a date field, FALSE otherwise.
+  */
+-function fullcalendar_field_is_date(EntityField|Custom $field): bool {
++function fullcalendar_field_is_date(EntityField|Date|Custom $field): bool {
+   // If the field is of non-entity types.
+   if ($field->definition['id'] === 'custom') {
+     return FALSE;
