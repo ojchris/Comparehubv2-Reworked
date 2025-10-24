@@ -10,8 +10,8 @@
  */
 function dynamic_calendar_slides_fullcalendar_view_alter(array &$view, array &$fullcalendar_settings) {
   // Replace with your view ID and block machine name.
-  if ($view['id'] === 'interactive_calendar_events') {
-    $view['#attached']['library'][] = 'dynamic_calnder_slides/dynamic_calnder_slides.fullcalendar_interaction';
+  if ($view['id'] === 'brand_events') {
+    $view['#attached']['library'][] = 'dynamic_calendar_slides/dynamic_calendar_slides.fullcalendar_interaction';
   }
 }
 

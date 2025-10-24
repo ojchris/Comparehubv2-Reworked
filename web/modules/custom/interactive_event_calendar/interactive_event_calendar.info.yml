@@ -1,0 +1,9 @@
+name: 'Interactive Event Calendar'
+type: module
+description: 'Displays event banners when a date is clicked in FullCalendar.'
+package: Compare Hub
+core_version_requirement: ^10 || ^11
+dependencies:
+  - fullcalendar_view:fullcalendar_view
+  - slick:slick
+  - slick_views:slick_views
