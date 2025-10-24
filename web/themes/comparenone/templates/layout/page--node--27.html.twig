@@ -229,9 +229,18 @@
         
           <section class="terms-policy-main-content" style="display:block" id="termscontent">
 
-            <div class="section-content terms-section-content">
-              {{ page.content }}            {{ kint( ) }} 
-            </div>
+               <div class="section-content terms-section-content">
+                    <div class="events-page">
+                         <div class="calendar-wrapper">
+                         {{ drupal_view('events_calendar', 'default') }}
+                         </div>
+
+                         <div id="event-banners" class="banners-wrapper mt-5">
+                         <p>Select a date to view events.</p>
+                         </div>
+                    </div>
+               </div>
+               
             <div class="section-content terms-section-content"></div>
             </section>
         </section>
