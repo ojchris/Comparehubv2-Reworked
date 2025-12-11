@@ -1,0 +1,724 @@
+diff --git a/src/Plugin/views/argument/Date.php b/src/Plugin/views/argument/Date.php
+index 2c93f86..b53fc1c 100644
+--- a/src/Plugin/views/argument/Date.php
++++ b/src/Plugin/views/argument/Date.php
+@@ -2,26 +2,28 @@
+ 
+ namespace Drupal\smart_date\Plugin\views\argument;
+ 
++use Drupal\Component\Datetime\DateTimePlus;
+ use Drupal\Component\Datetime\TimeInterface;
+ use Drupal\Core\Datetime\DateFormatterInterface;
+ use Drupal\Core\Form\FormStateInterface;
+ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+ use Drupal\Core\Routing\RouteMatchInterface;
+ use Drupal\node\NodeInterface;
++use Drupal\views\FieldAPIHandlerTrait;
+ use Drupal\views\Plugin\views\argument\Formula;
+ use Symfony\Component\DependencyInjection\ContainerInterface;
+ 
+ /**
+- * Argument handler for dates.
++ * Enhanced argument handler for dates with Smart Date range operators.
+  *
+- * Adds an option to set a default argument based on the current date.
+- *
+- * Definitions terms:
+- * - many to one: If true, the "many to one" helper will be used.
+- * - invalid input: A string to give to the user for obviously invalid input.
+- *                  This is deprecated in favor of argument validators.
+- *
+- * @see \Drupal\views\ManyToOneHelper
++ * Adds sophisticated date range operations to the existing Date argument.
++ * This replaces the original Date.php argument handler.
++ * 
++ * URL Pattern Examples:
++ * - /view/contains/2024-08-15 (single date operations)
++ * - /view/overlaps/2024-08-01--2024-08-31 (range operations)
++ * - /view/starts-or-ends/2024-08-15
++ * - /view/contains-range/2024-08-01--2024-08-31
+  *
+  * @ingroup views_argument_handlers
+  *
+@@ -29,6 +31,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
+  */
+ class Date extends Formula implements ContainerFactoryPluginInterface {
+ 
++  use FieldAPIHandlerTrait;
++
+   /**
+    * The date format used in the title.
+    *
+@@ -48,7 +52,7 @@ class Date extends Formula implements ContainerFactoryPluginInterface {
+    *
+    * @var string
+    */
+-  public $option_name = 'default_argument_date'; // phpcs:ignore
++  public $option_name = 'default_argument_date';
+ 
+   /**
+    * The route match.
+@@ -72,20 +76,36 @@ class Date extends Formula implements ContainerFactoryPluginInterface {
+   protected $timeService;
+ 
+   /**
+-   * Constructs a new Date instance.
++   * Valid Smart Date operators.
++   *
++   * @var array
++   */
++  protected $smartDateOperators = [
++    'contains',
++    'overlaps', 
++    'not-contains',
++    'starts-or-ends',
++    'contains-range',
++    'not-contains-range',
++    'starts-or-ends-range',
++  ];
++
++  /**
++   * Parsed operator from the argument.
++   *
++   * @var string
++   */
++  protected $parsedOperator;
++
++  /**
++   * Parsed date value(s) from the argument.
+    *
+-   * @param array $configuration
+-   *   A configuration array containing information about the plugin instance.
+-   * @param string $plugin_id
+-   *   The plugin_id for the plugin instance.
+-   * @param mixed $plugin_definition
+-   *   The plugin implementation definition.
+-   * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
+-   *   The route match.
+-   * @param \Drupal\Core\Datetime\DateFormatterInterface $date_formatter
+-   *   The date formatter service.
+-   * @param \\Drupal\Component\Datetime\TimeInterface $time_service
+-   *   The datetime.time service.
++   * @var array
++   */
++  protected $parsedDates = [];
++
++  /**
++   * Constructs a new Date instance.
+    */
+   public function __construct(array $configuration, $plugin_id, $plugin_definition, RouteMatchInterface $route_match, DateFormatterInterface $date_formatter, TimeInterface $time_service) {
+     parent::__construct($configuration, $plugin_id, $plugin_definition);
+@@ -109,29 +129,6 @@ class Date extends Formula implements ContainerFactoryPluginInterface {
+     );
+   }
+ 
+-  /**
+-   * {@inheritdoc}
+-   */
+-  public function summaryName($data) {
+-    $created = $data->{$this->name_alias};
+-    $when = strtotime($created . " 00:00:00 UTC");
+-    if (!$when) {
+-      return "Invalid Date";
+-    }
+-    return $this->dateFormatter->format($when, 'custom', $this->options['format'], 'UTC');
+-  }
+-
+-  /**
+-   * {@inheritdoc}
+-   */
+-  public function title() {
+-    $when = strtotime($this->argument . " 00:00:00 UTC");
+-    if (!$when) {
+-      return "Invalid Date";
+-    }
+-    return $this->dateFormatter->format($when, 'custom', $this->options['format'], 'UTC');
+-  }
+-
+   /**
+    * {@inheritdoc}
+    */
+@@ -139,6 +136,8 @@ class Date extends Formula implements ContainerFactoryPluginInterface {
+     $options = parent::defineOptions();
+ 
+     $options['format'] = ['default' => 'F j, Y'];
++    $options['granularity'] = ['default' => 'day'];
++    $options['enable_smart_operators'] = ['default' => TRUE];
+ 
+     if (!empty($this->definition['many to one'])) {
+       $options['add_table'] = ['default' => FALSE];
+@@ -157,16 +156,43 @@ class Date extends Formula implements ContainerFactoryPluginInterface {
+     $form['format'] = [
+       '#type' => 'textfield',
+       '#title' => $this->t('Format String'),
+-      '#description' => $this->t('How the values should be formatted.'),
++      '#description' => $this->t('How the values should be formatted in titles.'),
+       '#default_value' => $this->options['format'],
+       '#group' => 'options][more',
+     ];
+ 
++    $form['enable_smart_operators'] = [
++      '#type' => 'checkbox',
++      '#title' => $this->t('Enable Smart Date operators'),
++      '#description' => $this->t('Allow sophisticated date range operators like contains, overlaps, etc. via URL arguments.'),
++      '#default_value' => $this->options['enable_smart_operators'],
++      '#group' => 'options][more',
++    ];
++
++    $granularity_options = [
++      'second' => $this->t('Second'),
++      'minute' => $this->t('Minute'),
++      'hour'   => $this->t('Hour'),
++      'day'    => $this->t('Day'),
++      'week'   => $this->t('Week (Saturday to Sunday)'),
++      'month'  => $this->t('Month'),
++      'year'   => $this->t('Year'),
++    ];
++
++    $form['granularity'] = [
++      '#type' => 'select',
++      '#title' => $this->t('Granularity'),
++      '#options' => $granularity_options,
++      '#description' => $this->t('The granularity for date comparisons.'),
++      '#default_value' => $this->options['granularity'],
++      '#group' => 'options][more',
++    ];
++
+     if (!empty($this->definition['many to one'])) {
+       $form['add_table'] = [
+         '#type' => 'checkbox',
+         '#title' => $this->t('Allow multiple filter values to work together'),
+-        '#description' => $this->t('If selected, multiple instances of this filter can work together, as though multiple values were supplied to the same filter. This setting is not compatible with the "Reduce duplicates" setting.'),
++        '#description' => $this->t('If selected, multiple instances of this filter can work together.'),
+         '#default_value' => !empty($this->options['add_table']),
+         '#group' => 'options][more',
+       ];
+@@ -178,29 +204,490 @@ class Date extends Formula implements ContainerFactoryPluginInterface {
+         '#group' => 'options][more',
+       ];
+     }
++
++    // Add help text for URL patterns
++    $form['url_help'] = [
++      '#type' => 'details',
++      '#title' => $this->t('URL Pattern Examples'),
++      '#group' => 'options][more',
++      '#weight' => 100,
++    ];
++
++    $form['url_help']['examples'] = [
++      '#markup' => $this->t('
++        <strong>Single Date Operations:</strong><br>
++        • /view/contains/2024-08-15<br>
++        • /view/overlaps/2024-08-15<br>
++        • /view/not-contains/2024-08-15<br>
++        • /view/starts-or-ends/2024-08-15<br><br>
++        
++        <strong>Date Range Operations:</strong><br>
++        • /view/contains-range/2024-08-01--2024-08-31<br>
++        • /view/overlaps/2024-08-01--2024-08-31<br>
++        • /view/not-contains-range/2024-08-01--2024-08-31<br>
++        • /view/starts-or-ends-range/2024-08-01--2024-08-31<br><br>
++        
++        <strong>Week Granularity:</strong><br>
++        • /view/contains/2024-08-15 (with week granularity finds Saturday 8/10 to Sunday 8/16)<br>
++        • /view/overlaps/2024-08-15 (with week granularity)<br><br>
++        
++        <strong>Fallback:</strong><br>
++        • /view/2024-08-15 (defaults to exact date match)
++      '),
++    ];
++  }
++
++  /**
++   * Parse the argument to extract operator and date value(s).
++   *
++   * @param string $arg
++   *   The raw argument from the URL.
++   *
++   * @return bool
++   *   TRUE if parsing was successful, FALSE otherwise.
++   */
++  protected function parseArgument($arg) {
++    if (empty($arg)) {
++      return FALSE;
++    }
++
++    // Check if Smart Date operators are enabled
++    if (!$this->options['enable_smart_operators']) {
++      // Fall back to simple date parsing
++      $this->parsedOperator = 'simple';
++      $this->parsedDates = [$arg];
++      return $this->validateDate($arg);
++    }
++
++    // Try to parse as operator/date pattern
++    $parts = explode('/', $arg);
++    
++    if (count($parts) >= 2 && in_array($parts[0], $this->smartDateOperators)) {
++      $this->parsedOperator = $parts[0];
++      $date_part = $parts[1];
++      
++      // Check if this is a range operation
++      if (strpos($date_part, '--') !== FALSE) {
++        $date_range = explode('--', $date_part);
++        if (count($date_range) === 2) {
++          $this->parsedDates = $date_range;
++          return $this->validateDate($date_range[0]) && $this->validateDate($date_range[1]);
++        }
++      } else {
++        $this->parsedDates = [$date_part];
++        return $this->validateDate($date_part);
++      }
++    }
++    
++    // Fall back to simple date if no operator pattern found
++    $this->parsedOperator = 'simple';
++    $this->parsedDates = [$arg];
++    return $this->validateDate($arg);
+   }
+ 
+   /**
+-   * Build the summary query based on a string.
++   * Validate a date string.
++   *
++   * @param string $date
++   *   The date string to validate.
++   *
++   * @return bool
++   *   TRUE if valid, FALSE otherwise.
+    */
+-  protected function summaryQuery() {
+-    if (empty($this->definition['many to one'])) {
+-      $this->ensureMyTable();
++  protected function validateDate($date) {
++    try {
++      new DateTimePlus($date);
++      return TRUE;
+     }
+-    else {
+-      // @todo generate a summary of the confirmation.
++    catch (\Exception $e) {
++      return FALSE;
+     }
++  }
+ 
+-    $formula = $this->getFormula();
+-    $this->base_alias = $this->query->addField(NULL, $formula, $this->field . '_mod');
+-    $this->query->setCountField(NULL, $formula, $this->field, $this->field . '_mod');
++  /**
++   * {@inheritdoc}
++   */
++  public function validateArgument($argument) {
++    if (!$this->parseArgument($argument)) {
++      return FALSE;
++    }
+ 
+-    $this->summaryNameField();
+-    return $this->summaryBasics(FALSE);
++    // Additional validation for Smart Date operators
++    if ($this->parsedOperator !== 'simple' && !$this->isSmartDateField()) {
++      // Smart Date operators only work with Smart Date fields
++      return FALSE;
++    }
++
++    return TRUE;
++  }
++
++  /**
++   * Check if the current field is a Smart Date field.
++   *
++   * @return bool
++   *   TRUE if this is a Smart Date field, FALSE otherwise.
++   */
++  protected function isSmartDateField() {
++    if (method_exists($this, 'getFieldDefinition') && !empty($this->definition['field_name'])) {
++      return $this->getFieldDefinition()?->getType() === 'smartdate';
++    }
++    return FALSE;
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function query($group_by = FALSE) {
++    if (!$this->parseArgument($this->argument)) {
++      return;
++    }
++
++    $this->ensureMyTable();
++    
++    // Get field names for Smart Date (start and end values)
++    $field = $this->getSmartDateField();
++    $field_end = $this->getSmartDateEndField();
++
++    if ($this->parsedOperator === 'simple' || !$this->isSmartDateField()) {
++      // Use standard date argument behavior
++      $this->addSimpleDateCondition($field);
++    } else {
++      // Use Smart Date range operators
++      $this->addSmartDateConditions($field, $field_end);
++    }
++  }
++
++  /**
++   * Get the start value field name for Smart Date operations.
++   *
++   * @return string
++   *   The field name for the start value.
++   */
++  protected function getSmartDateField() {
++    $field = $this->tableAlias . '.' . $this->realField;
++    if (strpos($field, '_end_value') !== FALSE) {
++      $field = substr_replace($field, '_value', strrpos($field, '_end_value'));
++    }
++    return $field;
++  }
++
++  /**
++   * Get the end value field name for Smart Date operations.
++   *
++   * @return string
++   *   The field name for the end value.
++   */
++  protected function getSmartDateEndField() {
++    $field = $this->getSmartDateField();
++    return substr_replace($field, '_end_value', strrpos($field, '_value'));
++  }
++
++  /**
++   * Add simple date condition for non-Smart Date operations.
++   *
++   * @param string $field
++   *   The field name.
++   */
++  protected function addSimpleDateCondition($field) {
++    [$min_value, $max_value] = $this->getMinAndMax();
++    
++    if ($this->options['granularity'] !== 'second') {
++      $this->query->addWhereExpression($this->options['group'], "$field BETWEEN $min_value AND $max_value");
++    } else {
++      $this->query->addWhereExpression($this->options['group'], "$field = $min_value");
++    }
++  }
++
++  /**
++   * Add Smart Date range conditions based on the parsed operator.
++   *
++   * @param string $field
++   *   The start value field name.
++   * @param string $field_end
++   *   The end value field name.
++   */
++  protected function addSmartDateConditions($field, $field_end) {
++    [$min_value, $max_value] = $this->getMinAndMax();
++
++    switch ($this->parsedOperator) {
++      case 'contains':
++        $this->query->addWhereExpression($this->options['group'], "$field <= $min_value AND $field_end >= $max_value");
++        break;
++
++      case 'overlaps':
++        $this->query->addWhereExpression($this->options['group'], "$field <= $max_value AND $field_end >= $min_value");
++        break;
++
++      case 'not-contains':
++        $this->query->addWhereExpression($this->options['group'], "$field >= $max_value OR $field_end <= $min_value");
++        break;
++
++      case 'starts-or-ends':
++        $this->query->addWhereExpression($this->options['group'], "($field >= $min_value AND $field <= $max_value) OR ($field_end >= $min_value AND $field_end <= $max_value)");
++        break;
++
++      case 'contains-range':
++      case 'not-contains-range':
++      case 'starts-or-ends-range':
++        // These operators work with the range as provided
++        $this->addRangeConditions($field, $field_end, $min_value, $max_value);
++        break;
++
++      default:
++        // Fall back to simple condition
++        $this->addSimpleDateCondition($field);
++        break;
++    }
++  }
++
++  /**
++   * Add conditions for range-based operators.
++   *
++   * @param string $field
++   *   The start value field name.
++   * @param string $field_end
++   *   The end value field name.
++   * @param string $min_value
++   *   The minimum timestamp.
++   * @param string $max_value
++   *   The maximum timestamp.
++   */
++  protected function addRangeConditions($field, $field_end, $min_value, $max_value) {
++    switch ($this->parsedOperator) {
++      case 'contains-range':
++        $this->query->addWhereExpression($this->options['group'], "$field <= $min_value AND $field_end >= $max_value");
++        break;
++
++      case 'not-contains-range':
++        $this->query->addWhereExpression($this->options['group'], "$field >= $max_value OR $field_end <= $min_value");
++        break;
++
++      case 'starts-or-ends-range':
++        $this->query->addWhereExpression($this->options['group'], "($field >= $min_value AND $field <= $max_value) OR ($field_end >= $min_value AND $field_end <= $max_value)");
++        break;
++    }
++  }
++
++  /**
++   * Helper function to prepare min and max values based on parsed dates.
++   *
++   * @return array
++   *   An array containing the min and max timestamp values.
++   */
++  protected function getMinAndMax() {
++    $timezone = $this->getTimezone();
++    $granularity = $this->options['granularity'];
++
++    if (count($this->parsedDates) === 1) {
++      // Single date - create min/max based on granularity
++      $date = new DateTimePlus($this->parsedDates[0], new \DateTimeZone($timezone));
++      $a = $b = $date;
++    } else {
++      // Date range provided
++      $a = new DateTimePlus($this->parsedDates[0], new \DateTimeZone($timezone));
++      $b = new DateTimePlus($this->parsedDates[1], new \DateTimeZone($timezone));
++    }
++
++    $min = [
++      'year' => $a->format('Y'),
++      'month' => $a->format('n'),
++      'day' => $a->format('j'),
++      'hour' => $a->format('G'),
++      'minute' => $a->format('i'),
++      'second' => $a->format('s'),
++    ];
++    $max = [
++      'year' => $b->format('Y'),
++      'month' => $b->format('n'),
++      'day' => $b->format('j'),
++      'hour' => $b->format('G'),
++      'minute' => $b->format('i'),
++      'second' => $b->format('s'),
++    ];
++
++    // Apply granularity adjustments
++    switch ($granularity) {
++      case 'year':
++        $min['month'] = '01';
++        $max['month'] = '12';
++        $max['day'] = '31';
++        // fall through
++      case 'month':
++        $min['day'] = '01';
++        if ($granularity !== 'year') {
++          $max['day'] = $b->format('t');
++        }
++        // fall through
++      case 'week':
++        // Calculate week range from Saturday to Sunday
++        $week_range = $this->calculateWeekRange($a);
++        $min = [
++          'year' => $week_range['start']->format('Y'),
++          'month' => $week_range['start']->format('n'),
++          'day' => $week_range['start']->format('j'),
++          'hour' => '00',
++          'minute' => '00',
++          'second' => '00',
++        ];
++        $max = [
++          'year' => $week_range['end']->format('Y'),
++          'month' => $week_range['end']->format('n'),
++          'day' => $week_range['end']->format('j'),
++          'hour' => '23',
++          'minute' => '59',
++          'second' => '59',
++        ];
++        break;
++      case 'day':
++        $min['hour'] = '00';
++        $max['hour'] = '23';
++        // fall through
++      case 'hour':
++        $min['minute'] = '00';
++        $max['minute'] = '59';
++        // fall through
++      case 'minute':
++        $min['second'] = '00';
++        $max['second'] = '59';
++        break;
++    }
++
++    $min_value = $a::createFromArray($min, $timezone)->format('U');
++    $max_value = $b::createFromArray($max, $timezone)->format('U');
++    return [$min_value, $max_value];
++  }
++
++  /**
++   * Calculate week range from Saturday to Sunday for a given date.
++   *
++   * @param \Drupal\Component\Datetime\DateTimePlus $date
++   *   The reference date.
++   *
++   * @return array
++   *   Array with 'start' and 'end' DateTimePlus objects representing the week range.
++   */
++  protected function calculateWeekRange(DateTimePlus $date) {
++    $timezone = $date->getTimezone();
++    
++    // Get the day of week (0 = Sunday, 6 = Saturday)
++    $day_of_week = (int) $date->format('w');
++    
++    // Calculate days to previous Saturday
++    // If today is Saturday (6), days_to_saturday = 0
++    // If today is Sunday (0), days_to_saturday = 1  
++    // If today is Monday (1), days_to_saturday = 2, etc.
++    $days_to_saturday = ($day_of_week + 1) % 7;
++    
++    // Calculate days to next Sunday
++    // If today is Saturday (6), days_to_sunday = 1
++    // If today is Sunday (0), days_to_sunday = 0
++    // If today is Monday (1), days_to_sunday = 6, etc.
++    $days_to_sunday = (7 - $day_of_week) % 7;
++    
++    // Create start date (previous Saturday)
++    $start = clone $date;
++    if ($days_to_saturday > 0) {
++      $start->sub(new \DateInterval('P' . $days_to_saturday . 'D'));
++    }
++    
++    // Create end date (next Sunday)
++    $end = clone $date;
++    if ($days_to_sunday > 0) {
++      $end->add(new \DateInterval('P' . $days_to_sunday . 'D'));
++    }
++    
++    return [
++      'start' => $start,
++      'end' => $end,
++    ];
++  }
++
++  /**
++   * Get the proper time zone to use in computations.
++   *
++   * @return string
++   *   The time zone name.
++   */
++  protected function getTimezone() {
++    return date_default_timezone_get();
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function title() {
++    if (empty($this->parsedDates)) {
++      $this->parseArgument($this->argument);
++    }
++
++    if (empty($this->parsedDates)) {
++      return $this->t('Invalid Date');
++    }
++
++    // Create a descriptive title based on operator and dates
++    $date_strings = [];
++    foreach ($this->parsedDates as $date) {
++      $when = strtotime($date . " 00:00:00 UTC");
++      if ($when) {
++        $date_strings[] = $this->dateFormatter->format($when, 'custom', $this->options['format'], 'UTC');
++      }
++    }
++
++    if (empty($date_strings)) {
++      return $this->t('Invalid Date');
++    }
++
++    // Build title based on operator
++    switch ($this->parsedOperator) {
++      case 'contains':
++        return $this->t('Contains @date', ['@date' => $date_strings[0]]);
++        
++      case 'overlaps':
++        return $this->t('Overlaps @date', ['@date' => $date_strings[0]]);
++        
++      case 'not-contains':
++        return $this->t('Does not contain @date', ['@date' => $date_strings[0]]);
++        
++      case 'starts-or-ends':
++        return $this->t('Starts or ends at @date', ['@date' => $date_strings[0]]);
++        
++      case 'contains-range':
++        return $this->t('Contains @start to @end', [
++          '@start' => $date_strings[0],
++          '@end' => $date_strings[1] ?? $date_strings[0]
++        ]);
++        
++      case 'not-contains-range':
++        return $this->t('Does not contain @start to @end', [
++          '@start' => $date_strings[0],
++          '@end' => $date_strings[1] ?? $date_strings[0]
++        ]);
++        
++      case 'starts-or-ends-range':
++        return $this->t('Starts or ends in @start to @end', [
++          '@start' => $date_strings[0],
++          '@end' => $date_strings[1] ?? $date_strings[0]
++        ]);
++        
++      default:
++        return $date_strings[0];
++    }
++  }
++
++  /**
++   * {@inheritdoc}
++   */
++  public function summaryName($data) {
++    $created = $data->{$this->name_alias};
++    $when = strtotime($created . " 00:00:00 UTC");
++    if (!$when) {
++      return "Invalid Date";
++    }
++    return $this->dateFormatter->format($when, 'custom', $this->options['format'], 'UTC');
+   }
+ 
+   /**
+-   * Add an option to set the default value to the current date.
++   * Add default argument options for Smart Date.
+    */
+   public function defaultArgumentForm(&$form, FormStateInterface $form_state) {
+     parent::defaultArgumentForm($form, $form_state);
+@@ -251,4 +738,23 @@ class Date extends Formula implements ContainerFactoryPluginInterface {
+     return parent::getFormula();
+   }
+ 
+-}
++  /**
++   * Build the summary query based on a string.
++   */
++  protected function summaryQuery() {
++    if (empty($this->definition['many to one'])) {
++      $this->ensureMyTable();
++    }
++    else {
++      // @todo generate a summary of the confirmation.
++    }
++
++    $formula = $this->getFormula();
++    $this->base_alias = $this->query->addField(NULL, $formula, $this->field . '_mod');
++    $this->query->setCountField(NULL, $formula, $this->field, $this->field . '_mod');
++
++    $this->summaryNameField();
++    return $this->summaryBasics(FALSE);
++  }
++
++}
+\ No newline at end of file
