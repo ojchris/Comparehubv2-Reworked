@@ -43,6 +43,7 @@
         "drupal/splide": "^2.0",
         "drupal/twig_tweak": "^3.4",
         "drupal/views_ajax_history": "^1.8",
+        "drupal/views_rows_wrapper": "^2.1",
         "drush/drush": "^13.3"
     },
     "conflict": {
@@ -124,7 +125,11 @@
             },
             "drupal/core": {
                 "Fix Missing 'date' Plugin for Views error": "https://www.drupal.org/files/issues/2024-06-24/2325899-212.patch"
+            },
+            "drupal/smart_date": {
+                "Fix Granularity for Smart Date Contextual Filters": "patches/smart_date-3541685-granularity-for-contextual-1.patch"
             }
+    
         }
     }
 }
