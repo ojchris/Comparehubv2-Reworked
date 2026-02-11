@@ -1,0 +1,196 @@
+/*************************************************
+ * FullCalendar – Lebtivity-style horizontal strip
+ *************************************************/
+
+/* Purple background strip */
+.fc {
+  background: linear-gradient(90deg, #6a1b4d, #8e245f);
+  color: #fff;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+/* Remove grid borders */
+.fc-scrollgrid,
+.fc-scrollgrid-section,
+.fc-scrollgrid-sync-table {
+  border: none;
+}
+
+/* Force single horizontal row */
+.fc .fc-daygrid-body {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.fc .fc-daygrid-body::-webkit-scrollbar {
+  display: none;
+}
+
+.fc .fc-daygrid-row {
+  display: flex;
+  flex: 1;
+}
+
+.fc-daygrid-row:not(:first-child) {
+  display: none;
+}
+
+/* Day cell layout */
+.fc-daygrid-day {
+  flex: 1;
+  min-width: 80px;
+  text-align: center;
+  color: #fff;
+}
+
+.fc-daygrid-day-frame {
+  padding: 10px 0;
+}
+
+/* Day number */
+.fc-daygrid-day-number {
+  font-size: 20px;
+  font-weight: 600;
+  display: block;
+}
+
+/* Center top content */
+.fc-daygrid-day-top {
+  justify-content: center;
+}
+
+.fc td, .fc th {
+    border-style:dashed;
+    border-width: 1px;
+    border-color: #eee /* #6a1b4d */;
+    padding: 0;
+    vertical-align: top;
+}
+
+/*************************************************
+ * Disabled / past dates
+ *************************************************/
+
+.fc-day-past {
+  pointer-events: none;
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/*************************************************
+ * Today highlight
+ *************************************************/
+
+.fc-day-today {
+  background: #ffffff;
+  color: #6a1b4d;
+  border-radius: 8px;
+}
+
+/*************************************************
+ * Slick carousel wrapper
+ *************************************************/
+
+#event-slides {
+  margin-top: 30px;
+}
+
+/*************************************************
+ * Slick overrides (optional but recommended)
+ *************************************************/
+
+.slick-slide {
+  outline: none;
+}
+
+/* Force single-row calendar */
+.fc-dayGridWeek-view .fc-scrollgrid tbody tr {
+  height: auto !important;
+}
+
+.fc-dayGridWeek-view .fc-daygrid-body tr {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+/* Remove vertical spacing */
+.fc-dayGridWeek-view .fc-daygrid-day {
+  min-height: 80px;
+}
+
+/* Month label styling */
+.fc-toolbar-title {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+
+.slick-track {
+  display: flex !important;
+}
+
+.branding-partnership-subheading .white-text{
+  color: #ffffff;
+}
+
+.view-event-list-date-controlled header {
+  margin: 20px 0;
+  
+}
+
+.view-event-list-date-controlled .special-branding-text-highlight{
+  font-weight: bold;
+  color: #1b60be;
+  padding-bottom: 10px;
+}
+
+.view-event-list-date-controlled .view-content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.view-event-list-date-controlled .event-date {
+  font-size: 18px;
+  font-weight: 600;
+  color: #6a1b4d;
+}
+
+.view-event-list-date-controlled .views-row {
+    max-width: 145px;
+    margin: 10px 0 10px 0;
+    padding: 5px;
+}
+
+.view-event-list-date-controlled .views-row:hover {
+    background-color: #1b60be;
+}
+
+.view-event-list-date-controlled .views-row:hover a, .view-event-list-date-controlled .views-row:hover span {
+    color:#fff;
+}
+.view-event-list-date-controlled .views-row a {
+   
+    /* max-width: 145px; */
+    display: block;
+    margin: 10px 0 5px 0;
+    font-weight: normal;
+    color: #333;
+    line-height: 1.2em;
+    height: 50px;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.view-event-list-date-controlled .views-row a:hover {
+  color:#fff;
+  text-decoration: underline;
+}
+
+.view-event-list-date-controlled .views-row span {
+    font-size: 12px;
+    font-weight: normal;
+    color: #333;
+}

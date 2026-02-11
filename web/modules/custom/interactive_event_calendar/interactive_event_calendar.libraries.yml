@@ -8,3 +8,8 @@ interactive_event_calendar:
     - core/drupalSettings
     - core/once
     - slick/slick
+    - blazy/blazy
+
+  css:
+    theme:
+      css/style.css: {}
