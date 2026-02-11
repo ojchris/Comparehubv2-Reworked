@@ -1,0 +1,6 @@
+interactive_event_calendar.event_carousel:
+  path: '/event-cards/{date}'
+  defaults:
+    _controller: '\Drupal\interactive_event_calendar\Controller\EventCarouselController::render'
+  requirements:
+    _permission: 'access content'

@@ -6,22 +6,16 @@
  */
 
 /**
- * Implements hook_fullcalendar_view_alter().
- 
-function interactive_event_calendar_fullcalendar_view_alter(array &$fullcalendar_view, \Drupal\views\ViewExecutable $view) {
-  if (isset($view) && ($view->storage->id() ==  'events_calendar' || $view->storage->id() == 'event-carousel')) {
-    // Attach the interactive_event_calendar library that includes the JS.
-    $fullcalendar_view['#attached']['library'][] = 'interactive_event_calendar/interactive_event_calendar';
-  }
-}
-*/
-
-/**
 * Implements hook_views_pre_render().
 */
 function interactive_event_calendar_views_pre_render(\Drupal\views\ViewExecutable $view) {
   if (isset($view) && ($view->storage->id() == 'events_calendar')) {
     $view->element['#attached']['library'][] = 'interactive_event_calendar/interactive_event_calendar';
   }
+  
+}
+
+function interactive_event_calendar_page_attachments(array &$attachments) {
+  $attachments['#attached']['library'][] = 'interactive_event_calendar/interactive_event_calendar';
 }
 
