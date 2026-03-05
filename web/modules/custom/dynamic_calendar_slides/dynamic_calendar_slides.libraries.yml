@@ -1,9 +1,0 @@
-dynamic_calendar_slides.fullcalendar_interaction:
-  js:
-    js/fullcalendar-interaction.js: {}
-  dependencies:
-    - core/drupal
-    - core/drupal.ajax
-    - core/jquery
-    - core/drupalSettings
-    - slick/slick
