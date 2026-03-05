@@ -16,7 +16,12 @@
       });
   }
 
-  function formatDateHuman(dateStr) {
+  /** 
+   * Convert date string to human-readable format, e.g. "Monday 1 January 2024".
+   * @param {string} dateStr - The date string in ISO format (YYYY-MM-DD).
+   * @returns {string} - The formatted date string.
+  */
+  function readableDateFormat(dateStr) {
     const date = new Date(dateStr);
 
     return date.toLocaleDateString('en-GB', {
@@ -56,8 +61,11 @@
           const $calendar = $(calendarEl);
           const $target = $('#event-cards');
 
-          // 🔹 Shared loader (same logic you already had)
-          function loadDate(dateClicked) {
+          /* Event loader function, loads events for a given date and
+          * injects them into the page, and handles UI updates and error handling.
+          * @param {string} dateClicked - The date for which to load events, in ISO format (YYYY-MM-DD). 
+          */
+          function loadDateEvent(dateClicked) {
 
             if (!dateClicked) {
               return;
@@ -96,7 +104,7 @@
                 forceLoadBlazyImages($target);
 
                 // Update human-readable date
-                const formattedDate = formatDateHuman(dateClicked);
+                const formattedDate = readableDateFormat(dateClicked);
                 jQuery('.selected-date').text(formattedDate);
 
                 // Scroll after everything is ready
@@ -108,19 +116,19 @@
               });
           }
 
-          // 🔹 1️⃣ Load TODAY automatically (only once)
+          // Load events happening on TODAY's date on page load
           const today = new Date();
           const todayFormatted =
             today.getFullYear() + '-' +
             String(today.getMonth() + 1).padStart(2, '0') + '-' +
             String(today.getDate()).padStart(2, '0');
 
-          loadDate(todayFormatted);
+          loadDateEvent(todayFormatted);
 
-          // 🔹 2️⃣ Existing click logic (unchanged behavior)
+          // click date to load available events for that date
           $calendar.on('click', '.fc-day-top', function () {
             const dateClicked = $(this).data('date');
-            loadDate(dateClicked);
+            loadDateEvent(dateClicked);
           });
 
         });
