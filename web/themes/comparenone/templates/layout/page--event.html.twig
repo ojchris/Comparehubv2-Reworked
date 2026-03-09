@@ -226,7 +226,13 @@
           <div class="branding-info-jumbo-circle">
             <!-- load event calendar here -->
             <div class="calendar-wrapper">
-              {{ drupal_view('events_calendar', 'default') }}
+              <img src="{{file_url(node.field_image.entity.fileuri)}}" alt="node.field_image.entity.alt.value"
+               title="node.field_image.entity.title.value" class="page-secondary-mast-callout-image" />
+               <img src="{{file_url(node.field_images.entity.fileuri)}}" alt="node.field_images.entity.alt.value"
+               title="node.field_images.entity.title.value" class="page-secondary-mast-callout-image" />
+               <img src="{{file_url(node.field_banner.entity.fileuri)}}" alt="node.field_banner.entity.alt.value"
+               title="node.field_banner.entity.title.value" class="page-secondary-mast-callout-image" />
+
             </div>
           </div>
         </div>
@@ -243,11 +249,14 @@
               </div>
           <div class="section-content">
             <div class="events-page">
-                         
-                
-                <!-- load views event banner result based on clicked calendar date -->
+          <p>Time: Weekly  {{ node.field_scheduled_date.value|format_date('default') }}</P>
+          Place: 
+          Details: <br> {{node.field_description.value|raw}}
+
+
+          
                 <div id="event-cards" class="banners-wrapper mt-5">
-                <p class="section-heading  branding-partnership-heading">SELECT A DATE TO VIEW EVENTS.</p>
+                <p class="section-heading  branding-partnership-heading"></p>
                 </div>
 
                          
