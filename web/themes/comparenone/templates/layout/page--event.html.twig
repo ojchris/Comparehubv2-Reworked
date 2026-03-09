@@ -249,7 +249,27 @@
               </div>
           <div class="section-content">
             <div class="events-page">
-          <p>Time: Weekly  {{ node.field_scheduled_date.value|format_date('default') }} - {{ node.field_scheduled_date.end_value|format_date('time_only') }}</P>
+          <p>Time: Weekly  
+          
+          {# Avoid date duplication when it's same #}
+          {# Prepare values #}
+          {% set start = node.field_scheduled_date.value %}
+          {% set end = node.field_scheduled_date.end_value %}
+          {% set is_same_day = start|date('Y-m-d') == end|date('Y-m-d') %}
+
+          {# Format components #}
+          {% set date_fmt = 'date_only' %}
+          {% set time_fmt = 'H:i' %} {# Or 'g:i A' for 12hr #}
+
+          {% if is_same_day %}
+            {# Output: October 25: 09:00 – 17:00 #}
+            {{ start|format_date(date_fmt) }} till {{ end|format_date('custom', time_fmt) }}
+          {% else %}
+            {# Output: Oct 25, 09:00 – Oct 26, 17:00 #}
+            {{ start|format_date(date_fmt) }}, {{ start|format_date('custom', time_fmt) }} – 
+            {{ end|format_date(date_fmt) }}, {{ end|format_date('custom', time_fmt) }}
+          {% endif %}
+</P>
           Place: 
           Details: <br> {{node.field_description.value|raw}}
 
